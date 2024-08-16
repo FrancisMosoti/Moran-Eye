@@ -63,4 +63,19 @@ Route::group(['middleware' => 'checkRole:admin'], function () {
 
     // show room details
     Route::get('/show-rooms-details',[DashboardController::class, 'showDetails'])->name('show-rooms');
+
+     // Route to view the cow form
+     Route::get('/add-cow', [DashboardController::class, 'viewCow'])->name('view-cow');
+
+     // Route to handle cow data submission
+     Route::post('/add-cow', [DashboardController::class, 'addCow'])->name('add-cow');
+     
+     //route to handle display of cow info
+     Route::get('/cows', [DashboardController::class, 'showCows'])->name('showCows');
+
+     //route to edit cow details
+     Route::get('/cows/edit/{id}', [DashboardController::class, 'edit'])->name('edit-cow');
+
+     //route to delete cows
+     Route::get('/cows/delete/{id}', [DashboardController::class, 'delete'])->name('delete-cow');
 });

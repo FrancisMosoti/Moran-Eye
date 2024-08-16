@@ -8,6 +8,8 @@ use App\Models\Apartment;
 use App\Models\User;
 use App\Models\Rooms;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Cow;
+
 
 class DashboardController extends Controller
 {
@@ -44,6 +46,50 @@ class DashboardController extends Controller
         return redirect('/add-apartment')->with('success', 'Apartment Registered Successfully');
 
     } 
+
+    //add cows
+    public function viewCow(){
+        return view('add-cow');
+    }
+
+    public function addCow(Request $request): RedirectResponse
+    {
+        // Validation
+        $request->validate([
+            'serial_code' => 'required|string|max:255',
+            'breed' => 'required|string|max:255',
+            'dob' => 'required|date',
+            'purpose' => 'required|string|max:255',
+            'vaccination_health_records' => 'nullable|string',
+            'gender' => 'required|string|in:Male,Female',
+            'cow_image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+
+        $imagePath = '';
+        if($request->hasFile('cow_image')){
+            $imagePath = $request->file('cow_image')->store('uploads/cows', 'public');
+        }
+
+        Cow::create([
+            'serial_code' => $request->input('serial_code'),
+            'breed' => $request->input('breed'),
+            'dob' => $request->input('dob'),
+            'purpose' => $request->input('purpose'),
+            'vaccination_health_records' => $request->input('vaccination_health_records'),
+            'gender' => $request->input('gender'),
+            'image' => $imagePath,
+            'user_id' => $request->User()->id,
+        ]);
+
+        return redirect('/add-cow')->with('success', 'Cow Registered Successfully');
+    }
+
+    //show cows
+    public function showcows()
+    {
+        $cows = Cow::all(); // Retrieve all cows from the database
+        return view('show-cows', compact('cows')); // Pass the data to the view
+    }
 
 
     // room details
