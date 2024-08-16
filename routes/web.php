@@ -40,7 +40,7 @@ Route::get('/logout',[LogoutController::class, 'logout']);
 
 
 
-Route::group(['middleware' => 'checkRole:tenant'], function () {
+Route::group(['middleware' => 'checkRole:user'], function () {
     // Routes accessible only by users with the 'admin' role
     Route::get('/home',[HomeController::class, 'index'])->name('home');
 
@@ -49,7 +49,7 @@ Route::group(['middleware' => 'checkRole:tenant'], function () {
     Route::post('/pay',[MpesaController::class, 'initiateStkPush'])->name('pay');
 });
 
-Route::group(['middleware' => 'checkRole:landlord'], function () {
+Route::group(['middleware' => 'checkRole:admin'], function () {
     // Routes accessible only by users with the 'user' role
     Route::get('/dashboard',[DashboardController::class, 'dashboard'])->name('dashboard');
 

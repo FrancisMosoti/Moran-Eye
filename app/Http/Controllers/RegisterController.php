@@ -8,6 +8,8 @@ use App\Models\User;
 use App\Rules\PhoneValidation;
 use App\Notifications\RegisterSuccess;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Notification;
 
 class RegisterController extends Controller
 {
