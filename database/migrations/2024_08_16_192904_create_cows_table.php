@@ -20,6 +20,7 @@ return new class extends Migration
             $table->text('vaccination_health_records')->nullable();
             $table->enum('gender', ['Male', 'Female']);
             $table->string('image')->nullable(); // Path to the cow image
+            $table->string('qr_code_path')->nullable(); // Path to the QR code image
             $table->unsignedBigInteger('user_id');
             $table->timestamps();
 

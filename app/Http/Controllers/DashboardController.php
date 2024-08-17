@@ -9,28 +9,31 @@ use App\Models\User;
 use App\Models\Rooms;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Cow;
-
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
+use Illuminate\Support\Facades\Storage;
 
 class DashboardController extends Controller
 {
     //
-    public function dashboard(){
-        return view('dashboard',['apartments' => Apartment::where('user_id' , Auth::User()->id)->get()]);
+    public function dashboard()
+    {
+        return view('dashboard', ['apartments' => Apartment::where('user_id', Auth::User()->id)->get()]);
     }
 
-    public function viewApartment(){
+    public function viewApartment()
+    {
         return view('add-apartment');
     }
 
-    public function addApartment(Request $request):RedirectResponse
+    public function addApartment(Request $request): RedirectResponse
     {
 
         // validation
         $request->validate([
             'name' => 'required|string|max:255|min:3',
-            'location' => ['required','string'],
-            'rooms' => ['required','numeric'],
-            'till' => ['required','numeric'],
+            'location' => ['required', 'string'],
+            'rooms' => ['required', 'numeric'],
+            'till' => ['required', 'numeric'],
         ]);
 
         Apartment::create([
@@ -45,18 +48,18 @@ class DashboardController extends Controller
 
         return redirect('/add-apartment')->with('success', 'Apartment Registered Successfully');
 
-    } 
-
-    //add cows
-    public function viewCow(){
-        return view('add-cow');
     }
 
+    //add cows
+    public function viewCow()
+    {
+        return view('add-cow');
+    }
     public function addCow(Request $request): RedirectResponse
     {
         // Validation
-        $request->validate([
-            'serial_code' => 'required|string|max:255',
+        $validatedData = $request->validate([
+            'serial_code' => 'required|string|max:255|unique:cows,serial_code',
             'breed' => 'required|string|max:255',
             'dob' => 'required|date',
             'purpose' => 'required|string|max:255',
@@ -65,24 +68,36 @@ class DashboardController extends Controller
             'cow_image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
+        // Handle image upload
         $imagePath = '';
-        if($request->hasFile('cow_image')){
+        if ($request->hasFile('cow_image')) {
             $imagePath = $request->file('cow_image')->store('uploads/cows', 'public');
         }
 
-        Cow::create([
-            'serial_code' => $request->input('serial_code'),
-            'breed' => $request->input('breed'),
-            'dob' => $request->input('dob'),
-            'purpose' => $request->input('purpose'),
-            'vaccination_health_records' => $request->input('vaccination_health_records'),
-            'gender' => $request->input('gender'),
+        // Create the cow record
+        $cow = Cow::create([
+            'serial_code' => $validatedData['serial_code'],
+            'breed' => $validatedData['breed'],
+            'dob' => $validatedData['dob'],
+            'purpose' => $validatedData['purpose'],
+            'vaccination_health_records' => $validatedData['vaccination_health_records'],
+            'gender' => $validatedData['gender'],
             'image' => $imagePath,
-            'user_id' => $request->User()->id,
+            'user_id' => $request->user()->id,
         ]);
+
+        // Generate the QR code
+        $qrCode = $this->generateCowQRCode($cow);
+        $path = 'storage/qr-codes/' . $cow->serial_code . '.png';
+        Storage::put($path, $qrCode);
+
+        // Save the QR code path to the cow record
+        $cow->qr_code_path = $path;
+        $cow->save();
 
         return redirect('/add-cow')->with('success', 'Cow Registered Successfully');
     }
+
 
     //show cows
     public function showcows()
@@ -95,16 +110,17 @@ class DashboardController extends Controller
     // room details
     public function viewRoom(Request $request)
     {
-        $user=  Auth::User()->id;
+        $user = Auth::User()->id;
         $room = Apartment::where('user_id', $user)->first();
         // dd($room);
-        return view('add-room-details',['rooms' => $room->rooms]);
-        
+        return view('add-room-details', ['rooms' => $room->rooms]);
+
     }
-    public function addRoom(Request $request){
+    public function addRoom(Request $request)
+    {
 
         // $user=  $request->User()->id;
-        $room = Apartment::where('user_id' , Auth::User()->id)->first()->get();
+        $room = Apartment::where('user_id', Auth::User()->id)->first()->get();
         $apartment_id = $room[0]->id;
         // validation
         $request->validate([
@@ -116,23 +132,23 @@ class DashboardController extends Controller
             'pic4' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-        $imagePath1 = $imagePath2 =  $imagePath3 = $imagePath4 = '';
-        if($request->hasFile('pic1')){
+        $imagePath1 = $imagePath2 = $imagePath3 = $imagePath4 = '';
+        if ($request->hasFile('pic1')) {
 
             $imagePath1 = $request->file('pic1')->store('uploads', 'public');
         }
 
-        if($request->hasFile('pic2')){
+        if ($request->hasFile('pic2')) {
 
             $imagePath2 = $request->file('pic2')->store('uploads', 'public');
         }
 
-        if($request->hasFile('pic3')){
+        if ($request->hasFile('pic3')) {
 
             $imagePath3 = $request->file('pic3')->store('uploads', 'public');
         }
 
-        if($request->hasFile('pic4')){
+        if ($request->hasFile('pic4')) {
 
             $imagePath4 = $request->file('pic4')->store('uploads', 'public');
         }
@@ -142,10 +158,10 @@ class DashboardController extends Controller
             'user_id' => $request->User()->id,
             'apartment_id' => $apartment_id,
             'price' => $request->input('price'),
-            'pic_1' =>  $imagePath1,
-            'pic_2' =>  $imagePath2,
-            'pic_3' =>  $imagePath3,
-            'pic_4' =>  $imagePath4,
+            'pic_1' => $imagePath1,
+            'pic_2' => $imagePath2,
+            'pic_3' => $imagePath3,
+            'pic_4' => $imagePath4,
         ]);
 
         // Notification::route('slack', config('notification.register'))->notify(new RegisterSuccess());
@@ -155,8 +171,37 @@ class DashboardController extends Controller
     }
 
     // show room details
-    public function showDetails(){
-        return view('show-room-details',['rooms' => Rooms::all()]);
+    public function showDetails()
+    {
+        return view('show-room-details', ['rooms' => Rooms::all()]);
     }
+
+    //show qrcode
+
+    public function show($serial_code)
+    {
+        $cow = Cow::where('serial_code', $serial_code)->firstOrFail();
+        return view('cow.show', compact('cow'));
+    }
+
+
+    public function generateCowQRCode($cow)
+    {
+        $data = [
+            'serial_code' => $cow->serial_code,
+            'breed' => $cow->breed,
+            'date_of_birth' => $cow->date_of_birth,
+            'purpose' => $cow->purpose,
+            'vaccination_records' => $cow->vaccination_records,
+            'health_records' => $cow->health_records,
+            'gender' => $cow->gender,
+            'picture_url' => $cow->picture_url,
+        ];
+
+        $qrCode = QrCode::size(300)->generate(json_encode($data));
+
+        return response($qrCode)->header('Content-Type', 'image/png');
+    }
+
 
 }
