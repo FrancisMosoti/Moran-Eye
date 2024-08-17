@@ -1,0 +1,23 @@
+.form-control-user {
+    padding: 10px; /* Adjust this value */
+    line-height: 1.5; /* Adjust this value */
+}
+.form-control-user::placeholder {
+    color: #6c757d; /* Adjust to your preferred color */
+    opacity: 1; /* Ensure placeholder is fully visible */
+    text-align: left; /* Align the placeholder text */
+}
+.form-control-user {
+    display: flex;
+    align-items: center;
+}
+.form-control-user {
+    padding: 12px; /* Adjust based on your needs */
+    line-height: normal; /* Use normal or an appropriate value */
+}
+
+.form-control-user::placeholder {
+    color: #999; /* Ensure the color contrasts with the background */
+    opacity: 1; /* Make sure it's fully opaque */
+    text-align: center; /* Center the placeholder text if needed */
+}

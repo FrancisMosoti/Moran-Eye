@@ -198,9 +198,74 @@ class DashboardController extends Controller
             'picture_url' => $cow->picture_url,
         ];
 
-        $qrCode = QrCode::size(300)->generate(json_encode($data));
 
-        return response($qrCode)->header('Content-Type', 'image/png');
+        $qrCode = QrCode::size(300)
+            ->generate(json_encode($data));
+
+        return $qrCode; // SVG by default
+    }
+
+    
+
+    public function edit($id)
+{
+    // Retrieve the cow by its ID
+    $cow = Cow::find($id);
+
+    // Check if the cow exists
+    if (!$cow) {
+        return redirect()->route('showCows')->with('error', 'Cow not found.');
+    }
+
+    // Pass the cow data to the edit-cow view
+    return view('edit-cow', compact('cow'));
+}
+
+public function update(Request $request, $id)
+{
+    // Retrieve the cow by its ID
+    $cow = Cow::find($id);
+
+    // Check if the cow exists
+    if (!$cow) {
+        return redirect()->route('cows.index')->with('error', 'Cow not found.');
+    }
+
+    // Validate the request data
+    $request->validate([
+        'serial_code' => 'required|string|max:255',
+        'breed' => 'required|string|max:255',
+        'date_of_birth' => 'required|date',
+        'purpose' => 'required|string|max:255',
+        // Add validation for more fields as needed
+    ]);
+
+    // Update the cow details
+    $cow->serial_code = $request->input('serial_code');
+    $cow->breed = $request->input('breed');
+    $cow->date_of_birth = $request->input('date_of_birth');
+    $cow->purpose = $request->input('purpose');
+    // Update more fields as needed
+
+    $cow->save();
+
+    return redirect()->route('cows.index')->with('success', 'Cow details updated successfully.');
+}
+
+
+
+
+    //delete cow
+    public function destroy($id)
+    {
+        $cow = Cow::find($id);
+
+        if ($cow) {
+            $cow->delete();
+            return redirect()->route('showCows')->with('success', 'Cow deleted successfully.');
+        }
+
+        return redirect()->route('showCows')->with('error', 'Cow not found.');
     }
 
 

@@ -75,7 +75,10 @@ Route::group(['middleware' => 'checkRole:admin'], function () {
 
      //route to edit cow details
      Route::get('/cows/edit/{id}', [DashboardController::class, 'edit'])->name('edit-cow');
+     Route::put('/cows/update/{id}', [DashboardController::class, 'update'])->name('update-cow');
+
 
      //route to delete cows
-     Route::get('/cows/delete/{id}', [DashboardController::class, 'delete'])->name('delete-cow');
+     Route::delete('/cows/delete/{id}', [DashboardController::class, 'destroy'])->name('delete-cow');
+
 });
