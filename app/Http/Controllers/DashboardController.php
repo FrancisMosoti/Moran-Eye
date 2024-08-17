@@ -205,52 +205,52 @@ class DashboardController extends Controller
         return $qrCode; // SVG by default
     }
 
-    
+
 
     public function edit($id)
-{
-    // Retrieve the cow by its ID
-    $cow = Cow::find($id);
+    {
+        // Retrieve the cow by its ID
+        $cow = Cow::find($id);
 
-    // Check if the cow exists
-    if (!$cow) {
-        return redirect()->route('showCows')->with('error', 'Cow not found.');
+        // Check if the cow exists
+        if (!$cow) {
+            return redirect()->route('showCows')->with('error', 'Cow not found.');
+        }
+
+        // Pass the cow data to the edit-cow view
+        return view('edit-cow', compact('cow'));
     }
 
-    // Pass the cow data to the edit-cow view
-    return view('edit-cow', compact('cow'));
-}
+    public function update(Request $request, $id)
+    {
+        // Retrieve the cow by its ID
+        $cow = Cow::find($id);
 
-public function update(Request $request, $id)
-{
-    // Retrieve the cow by its ID
-    $cow = Cow::find($id);
+        // Check if the cow exists
+        if (!$cow) {
+            return redirect()->route('cows.index')->with('error', 'Cow not found.');
+        }
 
-    // Check if the cow exists
-    if (!$cow) {
-        return redirect()->route('cows.index')->with('error', 'Cow not found.');
+        // Validate the request data
+        $request->validate([
+            'serial_code' => 'required|string|max:255',
+            'breed' => 'required|string|max:255',
+            'date_of_birth' => 'required|date',
+            'purpose' => 'required|string|max:255',
+            // Add validation for more fields as needed
+        ]);
+
+        // Update the cow details
+        $cow->serial_code = $request->input('serial_code');
+        $cow->breed = $request->input('breed');
+        $cow->date_of_birth = $request->input('date_of_birth');
+        $cow->purpose = $request->input('purpose');
+        // Update more fields as needed
+
+        $cow->save();
+
+        return redirect()->route('cows.index')->with('success', 'Cow details updated successfully.');
     }
-
-    // Validate the request data
-    $request->validate([
-        'serial_code' => 'required|string|max:255',
-        'breed' => 'required|string|max:255',
-        'date_of_birth' => 'required|date',
-        'purpose' => 'required|string|max:255',
-        // Add validation for more fields as needed
-    ]);
-
-    // Update the cow details
-    $cow->serial_code = $request->input('serial_code');
-    $cow->breed = $request->input('breed');
-    $cow->date_of_birth = $request->input('date_of_birth');
-    $cow->purpose = $request->input('purpose');
-    // Update more fields as needed
-
-    $cow->save();
-
-    return redirect()->route('cows.index')->with('success', 'Cow details updated successfully.');
-}
 
 
 
@@ -266,6 +266,68 @@ public function update(Request $request, $id)
         }
 
         return redirect()->route('showCows')->with('error', 'Cow not found.');
+    }
+
+    public function showUsers()
+    {
+        $users = User::all();
+        return view('show-users', compact('users'));
+    }
+
+    public function editUser($id)
+    {
+        // Retrieve the user by ID
+        $user = User::find($id);
+    
+        // Check if the user exists
+        if (!$user) {
+            return redirect()->route('showUsers')->with('error', 'User not found.');
+        }
+    
+        // Check if the logged-in user is trying to edit their own role
+        if (auth()->user()->id === $user->id && $user->role === 'admin') {
+            return redirect()->route('showUsers')->with('error', 'You cannot edit your own role.');
+        }
+    
+        // Pass the user data to the edit-user view
+        return view('edit-user', compact('user'));
+    }
+    
+
+
+    public function updateUser(Request $request, $id)
+    {
+        // Retrieve the user by ID
+        $user = User::find($id);
+
+        // Check if the user exists
+        if (!$user) {
+            return redirect()->route('showUsers')->with('error', 'User not found.');
+        }
+
+        // Validate the request data
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'phone' => 'required|string|max:255',
+            'role' => 'required|string|in:admin,veterinary,farmer,company_worker,user',
+            'email' => 'required|email|unique:users,email,' . $user->id,
+            'password' => 'nullable|string|min:8|confirmed',
+        ]);
+
+        // Update the user details
+        $user->name = $request->input('name');
+        $user->phone = $request->input('phone');
+        $user->role = $request->input('role');
+        $user->email = $request->input('email');
+
+        // Only update the password if it was provided
+        if ($request->filled('password')) {
+            $user->password = bcrypt($request->input('password'));
+        }
+
+        $user->save();
+
+        return redirect()->route('showUsers')->with('success', 'User details updated successfully.');
     }
 
 

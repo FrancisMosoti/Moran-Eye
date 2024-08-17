@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-
+    <link rel="stylesheet" type="text/css" href="{{asset('css/styles.css')}}">
     <title>{{config('app.name')}} - Dashboard</title>
 
     <!-- Custom fonts for this template-->
