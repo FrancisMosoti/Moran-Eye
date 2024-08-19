@@ -51,6 +51,7 @@ Route::group(['middleware' => 'checkRole:admin'], function () {
 
     // Route to handle cow data submission
     Route::post('/add-cow', [DashboardController::class, 'addCow'])->name('add-cow');
+    
 
     //route to handle display of cow info
     // Route::get('/cows', [DashboardController::class, 'showCows'])->name('showCows');
@@ -87,6 +88,7 @@ Route::get('/add-schedule', [VeterinaryController::class, 'schedules'])->name('s
 
 
 Route::group(['middleware' => 'checkRole:farmer|admin'], function () {
+    Route::get('/cows', [DashboardController::class, 'showCows'])->name('showCows');
 
     Route::get('/customerDashboard', [DashboardController::class, 'customerDashboard'])->name('customerdashboard');
     Route::get('/cows', [DashboardController::class, 'showCows'])->name('showCows');
