@@ -106,6 +106,6 @@ Route::group(['middleware' => 'checkRole:vetinary'], function () {
 Route::group(['middleware' => 'checkRole:farmer'], function () {
 
     Route::get('/customerDashboard', [DashboardController::class, 'customerDashboard'])->name('customerdashboard');
-
+    Route::get('/cows', [DashboardController::class, 'showCows'])->name('showCows');
 
 });

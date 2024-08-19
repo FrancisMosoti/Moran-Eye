@@ -16,7 +16,9 @@
                         <th scope="col">Gender</th>
                         <th scope="col">Image</th>
                         <th scope="col">QR Code</th>
+                        @if(Auth::user()->role === 'admin')
                         <th scope="col">Actions</th>
+                        @endif
                     </tr>
                 </thead>
                 <tbody>
@@ -40,16 +42,16 @@
                                     <span class="text-muted">No QR Code</span>
                                 @endif
                             </td>
+                            @if(Auth::user()->role === 'admin')
                             <td>
-                                @if(Auth::user()->role === 'admin')
                                     <a href="{{ route('edit-cow', ['id' => $cow->id]) }}" class="btn btn-warning">Edit</a>
                                     <form action="{{ route('delete-cow', ['id' => $cow->id]) }}" method="POST" style="display:inline-block;">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this cow?')">Delete</button>
                                     </form>
+                                </td>
                                 @endif
-                            </td>
                         </tr>
                     @endforeach
                 </tbody>
