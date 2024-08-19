@@ -41,14 +41,7 @@ Route::get('/logout', [LogoutController::class, 'logout']);
 
 
 
-Route::group(['middleware' => 'checkRole:user'], function () {
-    // Routes accessible only by users with the 'admin' role
-    Route::get('/home', [HomeController::class, 'index'])->name('home');
 
-    Route::get('/show-apartment/{apart}', [HomeController::class, 'show'])->name('show-apartment');
-    Route::get('/book-room/{bk}', [HomeController::class, 'book'])->name('book');
-    Route::post('/pay', [MpesaController::class, 'initiateStkPush'])->name('pay');
-});
 
 Route::group(['middleware' => 'checkRole:admin'], function () {
 
@@ -60,7 +53,8 @@ Route::group(['middleware' => 'checkRole:admin'], function () {
     Route::post('/add-cow', [DashboardController::class, 'addCow'])->name('add-cow');
 
     //route to handle display of cow info
-    Route::get('/cows', [DashboardController::class, 'showCows'])->name('showCows');
+    // Route::get('/cows', [DashboardController::class, 'showCows'])->name('showCows');
+    // Route::get('/search-cows', [DashboardController::class, 'search'])->name('search-cows');
 
     //route to edit cow details
     Route::get('/cows/edit/{id}', [DashboardController::class, 'edit'])->name('edit-cow');
@@ -72,6 +66,7 @@ Route::group(['middleware' => 'checkRole:admin'], function () {
 
     //route to show users
     Route::get('/show-users', [DashboardController::class, 'showUsers'])->name('showUsers');
+    Route::get('/dashboard', [DashboardController::class, 'showUsers'])->name('dashboard');
 
     //route to edit users
     Route::get('/edit-user/{id}', [DashboardController::class, 'editUser'])->name('editUser');
@@ -83,14 +78,7 @@ Route::group(['middleware' => 'checkRole:admin'], function () {
 
 
 });
-Route::group(['middleware' => 'checkRole:vetinary'], function () {
-    // Routes accessible only by users with the 'user' role
 
-
-    //route too update vaccination details
-    Route::put('/cows/{id}/vaccinationDetails', [DashboardController::class, 'updateVaccination'])->name('vaccinationDetails');
-
-});
 
 
 // vet dashboard
@@ -98,7 +86,7 @@ Route::get('/vetdashboard', [DashboardController::class, 'vetdashboard'])->name(
 Route::get('/add-schedule', [VeterinaryController::class, 'schedules'])->name('schedules');
 
 
-Route::group(['middleware' => 'checkRole:farmer'], function () {
+Route::group(['middleware' => 'checkRole:farmer|admin'], function () {
 
     Route::get('/customerDashboard', [DashboardController::class, 'customerDashboard'])->name('customerdashboard');
     Route::get('/cows', [DashboardController::class, 'showCows'])->name('showCows');

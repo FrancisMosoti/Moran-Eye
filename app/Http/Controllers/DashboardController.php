@@ -283,13 +283,33 @@ class DashboardController extends Controller
     public function search(Request $request)
     {
         $search = $request->input('search');
-
-        // Search across all cows
-        $cows = Cow::where('serial_code', 'LIKE', "%{$search}%")
-            ->orWhere('breed', 'LIKE', "%{$search}%")
-            ->orWhere('purpose', 'LIKE', "%{$search}%")
-            ->get();
-
-        return view('show-cows', compact('cows'));
+        $breed = $request->input('breed');
+        $purpose = $request->input('purpose');
+    
+        // Build the query
+        $query = Cow::query();
+    
+        if ($search) {
+            $query->where('serial_code', 'LIKE', "%{$search}%");
+        }
+    
+        if ($breed && $breed !== 'all') {
+            $query->where('breed', $breed);
+        }
+    
+        if ($purpose && $purpose !== 'all') {
+            $query->where('purpose', $purpose);
+        }
+    
+        // Get the filtered results
+        $cows = $query->get();
+    
+        // Fetch the lists for filters
+        $breeds = Cow::select('breed')->distinct()->get()->pluck('breed');
+        $purpose = Cow::select('purpose')->distinct()->get()->pluck('purpose');
+    
+        return view('show-cows', compact('cows', 'breeds', 'purpose'));
     }
+    
+
 }
