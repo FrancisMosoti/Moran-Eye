@@ -39,12 +39,14 @@
                                 @endif
                             </td>
                             <td>
-                                <a href="{{ route('edit-cow', ['id' => $cow->id]) }}" class="btn btn-warning">Edit</a>
-                                <form action="{{ route('delete-cow', ['id' => $cow->id]) }}" method="POST" style="display:inline-block;">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this cow?')">Delete</button>
-                                </form>
+                                @if(Auth::user()->role === 'admin')
+                                    <a href="{{ route('edit-cow', ['id' => $cow->id]) }}" class="btn btn-warning">Edit</a>
+                                    <form action="{{ route('delete-cow', ['id' => $cow->id]) }}" method="POST" style="display:inline-block;">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this cow?')">Delete</button>
+                                    </form>
+                                @endif
                             </td>
                         </tr>
                     @endforeach
