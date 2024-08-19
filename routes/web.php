@@ -51,19 +51,7 @@ Route::group(['middleware' => 'checkRole:user'], function () {
 });
 
 Route::group(['middleware' => 'checkRole:admin'], function () {
-    // Routes accessible only by users with the 'user' role
-    Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
 
-    // add apartment
-    Route::get('/add-apartment', [DashboardController::class, 'viewApartment'])->name('view-apartment');
-    Route::post('/add-apartment', [DashboardController::class, 'addApartment'])->name('add-apartment');
-
-    // add each room detail
-    Route::get('/add-room-details', [DashboardController::class, 'viewRoom'])->name('view-room');
-    Route::post('/add-room-details', [DashboardController::class, 'addRoom'])->name('add-room');
-
-    // show room details
-    Route::get('/show-rooms-details', [DashboardController::class, 'showDetails'])->name('show-rooms');
 
     // Route to view the cow form
     Route::get('/add-cow', [DashboardController::class, 'viewCow'])->name('view-cow');
