@@ -1,16 +1,39 @@
 @extends('layouts.app')
 
 @section('content')
-    <!-- Search Form -->
+    <!-- Search and Filter Form -->
     <div class="container mt-4">
         <form action="{{ route('search-cows') }}" method="GET">
-            <div class="input-group mb-3">
-                <input type="text" name="search" class="form-control" placeholder="Search for a cow by serial code, breed, or purpose" aria-label="Search" aria-describedby="button-addon2">
-                <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Search</button>
+            <div class="row mb-3">
+                <div class="col-md-4">
+                    <input type="text" name="search" class="form-control" placeholder="Search by serial code" aria-label="Search" value="{{ request('search') }}">
+                </div>
+                <div class="col-md-3">
+                    <select name="breed" class="form-select">
+                        <option value="">Select Breed</option>
+                        <option value="all" {{ request('breed') == 'all' ? 'selected' : '' }}>All Breeds</option>
+                        @foreach($breeds as $breed)
+                            <option value="{{ $breed }}" {{ request('breed') == $breed ? 'selected' : '' }}>{{ $breed }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <select name="purpose" class="form-select">
+                        <option value="">Select Purpose</option>
+                        <option value="all" {{ request('purpose') == 'all' ? 'selected' : '' }}>All purpose</option>
+                        @foreach($purpose as $purpose)
+                            <option value="{{ $purpose }}" {{ request('purpose') == $purpose ? 'selected' : '' }}>{{ $purpose }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <button class="btn btn-outline-secondary w-100" type="submit">Search</button>
+                </div>
             </div>
         </form>
     </div>
 
+    <!-- Display Results -->
     @if($cows->isEmpty())
         <h1 class="text-center bg-info mt-5 mx-auto p-3" style="width: 15rem;">No Records found!</h1>
     @else
@@ -46,8 +69,6 @@
                             <td>
                                 @if($cow->qr_code_path)
                                 <embed src="{{ asset("storage/". $cow->qr_code_path) }}" width="300" height="300" type="image/svg+xml">
-                                    {{-- <img src="{{ asset("storage/". $cow->qr_code_path) }}" class="img-thumbnail" style="width: 100px;" alt="QR Code"> --}}
-                                    
                                 @else
                                     <span class="text-muted">No QR Code</span>
                                 @endif
