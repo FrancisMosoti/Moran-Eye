@@ -69,9 +69,9 @@
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Adding Info:</h6>
                         <a class="collapse-item" href="{{route('showUsers')}}">Show Users</a>
-                        <a class="collapse-item" href="{{route('view-room')}}">Room Details</a>
+                        <!-- <a class="collapse-item" href="{{route('view-room')}}">Room Details</a> -->
                         <a class="collapse-item" href="{{route('add-cow')}}">Register Cows</a>
-                        <a class="collapse-item" href="{{route('show-rooms')}}">Show Rooms</a>
+                        <!-- <a class="collapse-item" href="{{route('show-rooms')}}">Show Rooms</a> -->
                         <a class="collapse-item" href="{{route('showCows')}}">View Cows</a>
                     </div>
                 </div>
