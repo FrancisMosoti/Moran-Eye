@@ -11,7 +11,7 @@ class HomeController extends Controller
     //
     public function index(){
         // dd(Apartment::with('rooms'));
-        return view('welcome',['apartments' => Apartment::with('Ap_Rooms')->get()]);
+        return view('welcome');
     }
 
     public function show($id){

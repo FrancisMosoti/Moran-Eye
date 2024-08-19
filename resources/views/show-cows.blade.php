@@ -29,7 +29,7 @@
                             <td>{{ $cow->vaccination_health_records }}</td>
                             <td>{{ $cow->gender }}</td>
                             <td>
-                                <img src="{{ asset('storage/uploads'.$cow->image) }}" class="img-thumbnail" style="width: 100px;" alt="Cow Image">
+                                <img src="{{ asset('storage/'.$cow->image) }}" class="img-thumbnail" style="width: 100px;" alt="Cow Image">
                             </td>
                             <td>
                                 @if($cow->qr_code_path)
