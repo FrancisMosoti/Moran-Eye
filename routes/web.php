@@ -102,3 +102,10 @@ Route::group(['middleware' => 'checkRole:vetinary'], function () {
     Route::put('/cows/{id}/vaccinationDetails', [DashboardController::class, 'updateVaccination'])->name('vaccinationDetails');
 
 });
+
+Route::group(['middleware' => 'checkRole:farmer'], function () {
+
+    Route::get('/customerDashboard', [DashboardController::class, 'customerDashboard'])->name('customerdashboard');
+
+
+});

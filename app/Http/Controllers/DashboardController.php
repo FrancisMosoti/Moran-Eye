@@ -343,5 +343,8 @@ class DashboardController extends Controller
     return redirect()->route('show-cows')->with('success', 'Vaccination details updated successfully.');
 }
 
+public function customerDashboard(){
+    return view('customerDashboard');
+}
 
 }
