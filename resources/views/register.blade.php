@@ -41,11 +41,11 @@
                 <div class="form-outline mb-4">
                     <select class="form-select @error('role') is-invalid @enderror" value="{{ old('role')?old('role'):'' }}" name="role" aria-label="Default select example">
                     <option value="" selected>Open this select menu</option>
-                    <option value="admin">Admin</option>
+                    <!-- <option value="admin">Admin</option> -->
                     <option value="user">User</option>
-                    <option value="company_worker">Company Worker</option>
-                    <option value="farmer">farmer</option>
-                    <option value="veterinary">Vet</option>
+                    <!-- <option value="company_worker">Company Worker</option> -->
+                    <!-- <option value="farmer">farmer</option> -->
+                    <!-- <option value="veterinary">Vet</option> -->
                     </select>
                     <label class="form-label" for="password">Your Role</label>
                   @error('role')<div class="text-danger">{{ $message }}</div>@enderror
