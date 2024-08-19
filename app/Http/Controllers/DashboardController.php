@@ -89,7 +89,7 @@ class DashboardController extends Controller
         // Generate the QR code
         $qrCode = $this->generateCowQRCode($cow);
         $path = 'uploads/qr-codes/' . $cow->serial_code;
-        Storage::put('public/'.$path, $qrCode);
+        Storage::put('public/' . $path, $qrCode);
 
         // Save the QR code path to the cow record
         $cow->qr_code_path = $path;
@@ -272,27 +272,27 @@ class DashboardController extends Controller
         $users = User::where('role', '!=', 'admin')->get();
         return view('show-users', compact('users'));
     }
-    
+
 
     public function editUser($id)
     {
         // Retrieve the user by ID
         $user = User::find($id);
-    
+
         // Check if the user exists
         if (!$user) {
             return redirect()->route('showUsers')->with('error', 'User not found.');
         }
-    
+
         // Check if the logged-in user is trying to edit their own role
         if (auth()->user()->id === $user->id && $user->role === 'admin') {
             return redirect()->route('showUsers')->with('error', 'You cannot edit your own role.');
         }
-    
+
         // Pass the user data to the edit-user view
         return view('edit-user', compact('user'));
     }
-    
+
 
 
     public function updateUser(Request $request, $id)
@@ -331,20 +331,34 @@ class DashboardController extends Controller
     }
 
     public function updateVaccination(Request $request, $id)
-{
-    $request->validate([
-        'vaccination_health_records' => 'required|string',
-    ]);
+    {
+        $request->validate([
+            'vaccination_health_records' => 'required|string',
+        ]);
 
-    $cow = Cow::findOrFail($id);
-    $cow->vaccination_health_records = $request->vaccination_health_records;
-    $cow->save();
+        $cow = Cow::findOrFail($id);
+        $cow->vaccination_health_records = $request->vaccination_health_records;
+        $cow->save();
 
-    return redirect()->route('show-cows')->with('success', 'Vaccination details updated successfully.');
-}
+        return redirect()->route('show-cows')->with('success', 'Vaccination details updated successfully.');
+    }
 
-public function customerDashboard(){
-    return view('customerDashboard');
-}
+    public function customerDashboard()
+    {
+        return view('customerDashboard');
+    }
 
+    //SEARCH COWS
+    public function search(Request $request)
+    {
+        $search = $request->input('search');
+
+        // Search across all cows
+        $cows = Cow::where('serial_code', 'LIKE', "%{$search}%")
+            ->orWhere('breed', 'LIKE', "%{$search}%")
+            ->orWhere('purpose', 'LIKE', "%{$search}%")
+            ->get();
+
+        return view('show-cows', compact('cows'));
+    }
 }

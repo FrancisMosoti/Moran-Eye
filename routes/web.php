@@ -97,7 +97,7 @@ Route::group(['middleware' => 'checkRole:admin'], function () {
 });
 Route::group(['middleware' => 'checkRole:vetinary'], function () {
     // Routes accessible only by users with the 'user' role
-    
+
 
     //route too update vaccination details
     Route::put('/cows/{id}/vaccinationDetails', [DashboardController::class, 'updateVaccination'])->name('vaccinationDetails');
@@ -114,5 +114,8 @@ Route::group(['middleware' => 'checkRole:farmer'], function () {
 
     Route::get('/customerDashboard', [DashboardController::class, 'customerDashboard'])->name('customerdashboard');
     Route::get('/cows', [DashboardController::class, 'showCows'])->name('showCows');
+
+    Route::get('/search-cows', [DashboardController::class, 'search'])->name('search-cows');
+
 
 });

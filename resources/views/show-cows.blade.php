@@ -1,6 +1,16 @@
 @extends('layouts.app')
 
 @section('content')
+    <!-- Search Form -->
+    <div class="container mt-4">
+        <form action="{{ route('search-cows') }}" method="GET">
+            <div class="input-group mb-3">
+                <input type="text" name="search" class="form-control" placeholder="Search for a cow by serial code, breed, or purpose" aria-label="Search" aria-describedby="button-addon2">
+                <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Search</button>
+            </div>
+        </form>
+    </div>
+
     @if($cows->isEmpty())
         <h1 class="text-center bg-info mt-5 mx-auto p-3" style="width: 15rem;">No Records found!</h1>
     @else

@@ -69,9 +69,34 @@
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
-                <a class="nav-link" href="{{route('dashboard')}}">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Dashboard</span></a>
+            @auth
+    @php
+        $dashboardRoute = '';
+
+        switch (Auth::user()->role) {
+            case 'admin':
+                $dashboardRoute = route('dashboard');
+                break;
+            case 'farmer':
+                $dashboardRoute = route('customerdashboard');
+                break;
+            case 'veterinary':
+                $dashboardRoute = route('vetdashboard');
+                break;
+            case 'company_worker':
+                $dashboardRoute = route('companydashboard');
+                break;
+            default:
+                $dashboardRoute = route('userdashboard');
+                break;
+        }
+    @endphp
+    <a class="nav-link" href="{{ $dashboardRoute }}">
+        <i class="fas fa-fw fa-tachometer-alt"></i>
+        <span>Dashboard</span>
+    </a>
+@endauth
+
             </li>
 
             <!-- Divider -->

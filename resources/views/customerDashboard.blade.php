@@ -1,6 +1,6 @@
-@extends('layouts.app-customer')
+@extends('layouts.app')
 @section('content')
 
-<h1 class="text-center">Welcome</h1>
+<h1 class="text-center">Welcome {{ Auth::user()->name }}</h1>
 
 @endsection
