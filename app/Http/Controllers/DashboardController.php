@@ -80,7 +80,7 @@ class DashboardController extends Controller
             'breed' => $validatedData['breed'],
             'dob' => $validatedData['dob'],
             'purpose' => $validatedData['purpose'],
-            'vaccination_health_records' => $validatedData['vaccination_health_records'],
+            // 'vaccination_health_records' => $validatedData['vaccination_health_records'],
             'gender' => $validatedData['gender'],
             'image' => $imagePath,
             'user_id' => $request->user()->id,
@@ -88,7 +88,7 @@ class DashboardController extends Controller
 
         // Generate the QR code
         $qrCode = $this->generateCowQRCode($cow);
-        $path = 'uploads/qr-codes/' . $cow->serial_code;
+        $path = 'uploads/qr-codes/' . $cow->serial_code . '.svg/';
         Storage::put($path, $qrCode);
 
         // Save the QR code path to the cow record
@@ -192,7 +192,7 @@ class DashboardController extends Controller
             'breed' => $cow->breed,
             'date_of_birth' => $cow->date_of_birth,
             'purpose' => $cow->purpose,
-            'vaccination_records' => $cow->vaccination_records,
+            // 'vaccination_records' => $cow->vaccination_records,
             'health_records' => $cow->health_records,
             'gender' => $cow->gender,
             'picture_url' => $cow->picture_url,
@@ -272,27 +272,27 @@ class DashboardController extends Controller
         $users = User::where('role', '!=', 'admin')->get();
         return view('show-users', compact('users'));
     }
-    
+
 
     public function editUser($id)
     {
         // Retrieve the user by ID
         $user = User::find($id);
-    
+
         // Check if the user exists
         if (!$user) {
             return redirect()->route('showUsers')->with('error', 'User not found.');
         }
-    
+
         // Check if the logged-in user is trying to edit their own role
         if (auth()->user()->id === $user->id && $user->role === 'admin') {
             return redirect()->route('showUsers')->with('error', 'You cannot edit your own role.');
         }
-    
+
         // Pass the user data to the edit-user view
         return view('edit-user', compact('user'));
     }
-    
+
 
 
     public function updateUser(Request $request, $id)
@@ -328,6 +328,19 @@ class DashboardController extends Controller
         $user->save();
 
         return redirect()->route('showUsers')->with('success', 'User details updated successfully.');
+    }
+
+    public function updateVaccination(Request $request, $id)
+    {
+        $request->validate([
+            'vaccination_health_records' => 'required|string',
+        ]);
+
+        $cow = Cow::findOrFail($id);
+        $cow->vaccination_health_records = $request->vaccination_health_records;
+        $cow->save();
+
+        return redirect()->route('show-cows')->with('success', 'Vaccination details updated successfully.');
     }
 
 

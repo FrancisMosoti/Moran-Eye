@@ -91,4 +91,14 @@ Route::group(['middleware' => 'checkRole:admin'], function () {
 
 
 
+
+
+});
+Route::group(['middleware' => 'checkRole:vetinary'], function () {
+    // Routes accessible only by users with the 'user' role
+    Route::get('/vetdashboard', [DashboardController::class, 'vetdashboard'])->name('vetdashboard');
+
+    //route too update vaccination details
+    Route::put('/cows/{id}/vaccinationDetails', [DashboardController::class, 'updateVaccination'])->name('vaccinationDetails');
+
 });

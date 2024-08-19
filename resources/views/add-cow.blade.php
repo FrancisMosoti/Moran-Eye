@@ -153,14 +153,14 @@
                             @error('purpose')
                             <div class="text-danger">{{ $message }}</div>@enderror
                         </div>
-                        <div class="mb-3">
+                        <!-- <div class="mb-3">
                             <textarea name="vaccination_health_records"
                                 class="form-control form-control-user @error('vaccination_health_records') is-invalid @enderror"
                                 id="vaccinationHealthRecords"
                                 placeholder="Vaccination and Health Records">{{ old('vaccination_health_records') ? old('vaccination_health_records') : '' }}</textarea>
                             @error('vaccination_health_records')
                             <div class="text-danger">{{ $message }}</div>@enderror
-                        </div>
+                        </div> -->
                         <div class="mb-3">
                             <select name="gender"
                                 class="form-control form-control-user @error('gender') is-invalid @enderror"
