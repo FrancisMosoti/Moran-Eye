@@ -12,16 +12,26 @@
                     <div class="text-start p-5" style="max-width: 900px;">
                         <h3 class="text-white">Ranch Management System</h3>
                         <h1 class="display-1 text-white mb-md-4">Optimize Your Ranch Operations</h1>
-                        
                         @auth
-                            <a href="{{ route('dashboard') }}" class="btn btn-primary py-md-3 px-md-5 me-3">Dashboard</a>
-                            <a href="#" class="btn btn-secondary py-md-3 px-md-5">Visit Blog</a>
-                        @endauth
+    @if(Auth::user()->role === 'admin')
+        <a href="{{ route('dashboard') }}" class="btn btn-primary py-md-3 px-md-5 me-3">Admin Dashboard</a>
+    @elseif(Auth::user()->role === 'farmer')
+        <a href="{{ route('customerdashboard') }}" class="btn btn-primary py-md-3 px-md-5 me-3">Farmer Dashboard</a>
+    @elseif(Auth::user()->role === 'veterinary')
+        <a href="{{ route('vetdashboard') }}" class="btn btn-primary py-md-3 px-md-5 me-3">Veterinary Dashboard</a>
+    @elseif(Auth::user()->role === 'company_worker')
+        <a href="{{ route('companydashboard') }}" class="btn btn-primary py-md-3 px-md-5 me-3">Company Worker Dashboard</a>
+    @else
+        <a href="{{ route('userdashboard') }}" class="btn btn-primary py-md-3 px-md-5 me-3">User Dashboard</a>
+    @endif
+    <a href="#" class="btn btn-secondary py-md-3 px-md-5">Visit Blog</a>
+@endauth
 
-                        @guest
-                            <a href="{{ route('login') }}" class="btn btn-primary py-md-3 px-md-5 me-3">Login</a>
-                            <a href="{{ route('register') }}" class="btn btn-secondary py-md-3 px-md-5">Signup</a>
-                        @endguest
+@guest
+    <a href="{{ route('login') }}" class="btn btn-primary py-md-3 px-md-5 me-3">Login</a>
+    <a href="{{ route('register') }}" class="btn btn-secondary py-md-3 px-md-5">Signup</a>
+@endguest
+
                     </div>
                 </div>
             </div>
@@ -33,14 +43,25 @@
                         <h1 class="display-1 text-white mb-md-4">Ensure Healthy and Productive Livestock</h1>
                         
                         @auth
-                            <a href="{{ route('dashboard') }}" class="btn btn-primary py-md-3 px-md-5 me-3">Dashboard</a>
-                            <a href="#" class="btn btn-secondary py-md-3 px-md-5">Visit Blog</a>
-                        @endauth
+    @if(Auth::user()->role === 'admin')
+        <a href="{{ route('dashboard') }}" class="btn btn-primary py-md-3 px-md-5 me-3">Admin Dashboard</a>
+    @elseif(Auth::user()->role === 'farmer')
+        <a href="{{ route('customerdashboard') }}" class="btn btn-primary py-md-3 px-md-5 me-3">Farmer Dashboard</a>
+    @elseif(Auth::user()->role === 'veterinary')
+        <a href="{{ route('vetdashboard') }}" class="btn btn-primary py-md-3 px-md-5 me-3">Veterinary Dashboard</a>
+    @elseif(Auth::user()->role === 'company_worker')
+        <a href="{{ route('companydashboard') }}" class="btn btn-primary py-md-3 px-md-5 me-3">Company Worker Dashboard</a>
+    @else
+        <a href="{{ route('userdashboard') }}" class="btn btn-primary py-md-3 px-md-5 me-3">User Dashboard</a>
+    @endif
+    <a href="#" class="btn btn-secondary py-md-3 px-md-5">Visit Blog</a>
+@endauth
 
-                        @guest
-                            <a href="{{ route('login') }}" class="btn btn-primary py-md-3 px-md-5 me-3">Login</a>
-                            <a href="{{ route('register') }}" class="btn btn-secondary py-md-3 px-md-5">Signup</a>
-                        @endguest
+@guest
+    <a href="{{ route('login') }}" class="btn btn-primary py-md-3 px-md-5 me-3">Login</a>
+    <a href="{{ route('register') }}" class="btn btn-secondary py-md-3 px-md-5">Signup</a>
+@endguest
+
                     </div>
                 </div>
             </div>
