@@ -88,7 +88,7 @@ class DashboardController extends Controller
 
         // Generate the QR code
         $qrCode = $this->generateCowQRCode($cow);
-        $path = 'storage/qr-codes/' . $cow->serial_code . '.png';
+        $path = 'uploads/qr-codes/' . $cow->serial_code;
         Storage::put($path, $qrCode);
 
         // Save the QR code path to the cow record
