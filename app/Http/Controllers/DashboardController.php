@@ -267,12 +267,12 @@ class DashboardController extends Controller
 
         return redirect()->route('showCows')->with('error', 'Cow not found.');
     }
-
     public function showUsers()
     {
-        $users = User::all();
+        $users = User::where('role', '!=', 'admin')->get();
         return view('show-users', compact('users'));
     }
+    
 
     public function editUser($id)
     {
