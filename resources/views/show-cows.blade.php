@@ -33,7 +33,9 @@
                             </td>
                             <td>
                                 @if($cow->qr_code_path)
-                                    <img src="{{ asset($cow->qr_code_path) }}" class="img-thumbnail" style="width: 100px;" alt="QR Code">
+                                <embed src="{{ asset("storage/". $cow->qr_code_path) }}" width="300" height="300" type="image/svg+xml">
+                                    {{-- <img src="{{ asset("storage/". $cow->qr_code_path) }}" class="img-thumbnail" style="width: 100px;" alt="QR Code"> --}}
+                                    
                                 @else
                                     <span class="text-muted">No QR Code</span>
                                 @endif
