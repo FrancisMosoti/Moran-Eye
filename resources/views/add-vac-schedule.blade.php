@@ -1,7 +1,6 @@
-@extends('layouts.app')
-
-
+@extends('layouts.vet-app')
 @section('content')
+
 <div class="container-fluid">
 
     <!-- Page Heading -->
@@ -108,7 +107,7 @@
             <!-- Project Card Example -->
             <div class="card shadow mb-4">
                 <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">ADD COW</h6>
+                    <h6 class="m-0 font-weight-bold text-primary">ADD Vaccination Schedule</h6>
                     @if (session('success'))
                         <div class="alert alert-success">
                             {{ session('success') }}
@@ -125,6 +124,7 @@
                     <form class="user mx-3" action="{{route('add-cow')}}" method="post" enctype="multipart/form-data">
                         @csrf
                         <div class="mb-3">
+                            <label for="">Serial Code </label>
                             <input type="text" name="serial_code"
                                 value="{{ old('serial_code') ? old('serial_code') : '' }}"
                                 class="form-control form-control-user @error('serial_code') is-invalid @enderror"
@@ -133,6 +133,7 @@
                             <div class="text-danger">{{ $message }}</div>@enderror
                         </div>
                         <div class="mb-3">
+                            <label for="">Enter Cow Breed</label>
                             <input type="text" name="breed" value="{{ old('breed') ? old('breed') : '' }}"
                                 class="form-control form-control-user @error('breed') is-invalid @enderror" id="breed"
                                 placeholder="Breed">
@@ -140,6 +141,7 @@
                             <div class="text-danger">{{ $message }}</div>@enderror
                         </div>
                         <div class="mb-3">
+                            <label for=""> Date of Birth</label>
                             <input type="date" name="dob" value="{{ old('dob') ? old('dob') : '' }}"
                                 class="form-control form-control-user @error('dob') is-invalid @enderror"
                                 id="dateOfBirth" placeholder="Date of Birth">
@@ -147,6 +149,7 @@
                             div class="text-danger">{{ $message }}</div>@enderror
                         </div>
                         <div class="mb-3">
+                            <label for=""> Purpose(Dairy / Beef)</label>
                             <input type="text" name="purpose" value="{{ old('purpose') ? old('purpose') : '' }}"
                                 class="form-control form-control-user @error('purpose') is-invalid @enderror"
                                 id="purpose" placeholder="Purpose (e.g., Dairy, Beef)">
@@ -162,7 +165,9 @@
                             <div class="text-danger">{{ $message }}</div>@enderror
                         </div> -->
                         <div class="mb-3">
+                            <label for=""> Select Gender</label>
                             <select name="gender"
+                            {{-- form-control-user --}}
                                 class="form-control  @error('gender') is-invalid @enderror"
                                 id="gender">
                                 <option value="">Select Gender</option>
@@ -196,5 +201,7 @@
         $('.alert').fadeOut('slow');
     }, 10000); // 3 seconds
 </script>
+
+
 
 @endsection
