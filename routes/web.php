@@ -104,6 +104,12 @@ Route::group(['middleware' => 'checkRole:vetinary'], function () {
 
 });
 
+
+// vet dashboard
+Route::get('/vetdashboard', [DashboardController::class, 'vetdashboard'])->name('vetdashboard');
+Route::get('/add-schedule', [VeterinaryController::class, 'schedules'])->name('schedules');
+
+
 Route::group(['middleware' => 'checkRole:farmer'], function () {
 
     Route::get('/customerDashboard', [DashboardController::class, 'customerDashboard'])->name('customerdashboard');
