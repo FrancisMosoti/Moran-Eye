@@ -33,12 +33,36 @@
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{route('dashboard')}}">
-                <div class="sidebar-brand-icon rotate-n-15">
-                    <i class="fas fa-home"></i>
-                </div>
-                <div class="sidebar-brand-text mx-3">{{config('app.name')}}</div>
-            </a>
+            @auth
+    @php
+        $dashboardRoute = '';
+
+        switch (Auth::user()->role) {
+            case 'admin':
+                $dashboardRoute = route('dashboard');
+                break;
+            case 'farmer':
+                $dashboardRoute = route('customerdashboard');
+                break;
+            case 'veterinary':
+                $dashboardRoute = route('vetdashboard');
+                break;
+            case 'company_worker':
+                $dashboardRoute = route('companydashboard');
+                break;
+            default:
+                $dashboardRoute = route('userdashboard');
+                break;
+        }
+    @endphp
+    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ $dashboardRoute }}">
+        <div class="sidebar-brand-icon rotate-n-15">
+            <i class="fas fa-home"></i>
+        </div>
+        <div class="sidebar-brand-text mx-3">{{ config('app.name') }}</div>
+    </a>
+@endauth
+
 
             <!-- Divider -->
             <hr class="sidebar-divider my-0">
@@ -68,10 +92,13 @@
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Adding Info:</h6>
-                        <a class="collapse-item" href="{{route('showUsers')}}">Show Users</a>
-                        {{-- <a class="collapse-item" href="{{route('view-room')}}">Room Details</a> --}}
-                        <a class="collapse-item" href="{{route('add-cow')}}">Register Cows</a>
-                        {{-- <a class="collapse-item" href="{{route('show-rooms')}}">Show Rooms</a> --}}
+                        @auth
+    @if(Auth::user()->role === 'admin')
+        <a class="collapse-item" href="{{route('showUsers')}}">Show Users</a>
+        <a class="collapse-item" href="{{route('add-cow')}}">Register Cows</a>
+    @endif
+@endauth
+                       
                         <a class="collapse-item" href="{{route('showCows')}}">View Cows</a>
                     </div>
                 </div>
