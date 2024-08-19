@@ -8,6 +8,7 @@ use App\Http\Controllers\LogoutController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\MpesaController;
+use App\Http\Controllers\VeterinaryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -96,12 +97,18 @@ Route::group(['middleware' => 'checkRole:admin'], function () {
 });
 Route::group(['middleware' => 'checkRole:vetinary'], function () {
     // Routes accessible only by users with the 'user' role
-    Route::get('/vetdashboard', [DashboardController::class, 'vetdashboard'])->name('vetdashboard');
+    
 
     //route too update vaccination details
     Route::put('/cows/{id}/vaccinationDetails', [DashboardController::class, 'updateVaccination'])->name('vaccinationDetails');
 
 });
+
+
+// vet dashboard
+Route::get('/vetdashboard', [DashboardController::class, 'vetdashboard'])->name('vetdashboard');
+Route::get('/add-schedule', [VeterinaryController::class, 'schedules'])->name('schedules');
+
 
 Route::group(['middleware' => 'checkRole:farmer'], function () {
 
