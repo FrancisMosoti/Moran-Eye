@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.vet-app')
 @section('content')
 
    <!-- Display Results -->
@@ -10,11 +10,13 @@
            <thead class="thead-dark">
                <tr>
                    <th scope="col">Serial Code</th>
-                   <th scope="col">Breed</th>
-                   <th scope="col">Date of Birth</th>
+                   <th scope="col">Disease</th>
+                   <th scope="col">Vaccine Name</th>
+                   <th scope="col">Next Vaccine</th>
                    <th scope="col">Purpose</th>
-                   <th scope="col">Vaccination & Health Records</th>
                    <th scope="col">Gender</th>
+                   {{-- <th scope="col">Vaccination & Health Records</th> --}}
+                   {{-- <th scope="col">Gender</th> --}}
                    <th scope="col">Image</th>
                    <th scope="col">QR Code</th>
                    @if(Auth::user()->role === 'admin')
@@ -26,10 +28,13 @@
                @foreach($cows as $cow)
                    <tr>
                        <td>{{ $cow->serial_code }}</td>
-                       <td>{{ $cow->breed }}</td>
-                       <td>{{ $cow->dob }}</td>
+                       <td>{{ $cow->disease }}</td>
+                       <td>{{ $cow->vaccine }}</td>
+                       <td>{{ $cow->next_vaccine }}</td>
+                       {{-- <td>{{ $cow->breed }}</td>
+                       <td>{{ $cow->dob }}</td> --}}
                        <td>{{ $cow->purpose }}</td>
-                       <td>{{ $cow->vaccination_health_records }}</td>
+                       {{-- <td>{{ $cow->vaccination_health_records }}</td> --}}
                        <td>{{ $cow->gender }}</td>
                        <td>
                            <img src="{{ asset('storage/'.$cow->image) }}" class="img-thumbnail" style="width: 100px;" alt="Cow Image">

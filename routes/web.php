@@ -42,7 +42,7 @@ Route::get('/logout', [LogoutController::class, 'logout']);
 Route::group(['middleware' => 'checkRole:admin'], function () {
 
         // vet dashboard
-Route::get('/vetdashboard', [DashboardController::class, 'vetdashboard'])->name('vetdashboard');
+Route::get('/vetdashboard', [DashboardController::class, 'vetDash'])->name('vetdashboard');
 Route::get('/add-schedule', [VeterinaryController::class, 'schedules'])->name('schedules');
 Route::post('/add-schedule', [VeterinaryController::class, 'addSchedule'])->name('schedules.store');
 
@@ -73,14 +73,9 @@ Route::post('/add-schedule', [VeterinaryController::class, 'addSchedule'])->name
     Route::put('/update-user/{id}', [DashboardController::class, 'updateUser'])->name('updateUser');
 });
 
-<<<<<<< HEAD
 
 
 
-=======
-Route::get('/vetdashboard', [DashboardController::class, 'vetdashboard'])->name('vetdashboard');
-Route::get('/add-schedule', [VeterinaryController::class, 'schedules'])->name('schedules');
->>>>>>> 31bc31039826e22111c0e2be86c1a9b88cb76f06
 
 Route::group(['middleware' => 'checkRole:farmer|admin'], function () {
     Route::get('/cows', [DashboardController::class, 'showCows'])->name('showCows');
@@ -98,12 +93,6 @@ Route::group(['middleware' => 'checkRole:company_worker|admin'], function () {
     Route::get('/company-worker', [CompanyWorkerController::class, 'companyWorker'])->name('company_worker');
 
 
-<<<<<<< HEAD
-
-
-
-});
-=======
     Route::get('/worklogs', [WorkLogController::class, 'index'])->name('worklogs.index');
     Route::get('/worklogs/create', [WorkLogController::class, 'create'])->name('worklogs.create');
     Route::post('/worklogs', [WorkLogController::class, 'store'])->name('worklogs.store');
@@ -112,4 +101,3 @@ Route::group(['middleware' => 'checkRole:company_worker|admin'], function () {
    
 
 });
->>>>>>> 31bc31039826e22111c0e2be86c1a9b88cb76f06
