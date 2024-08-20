@@ -9,7 +9,7 @@
     <meta content="Free HTML Templates" name="description"> -->
 
     <!-- Favicon -->
-    <link href="{{secure_asset('images/LOGO.jpg')}}" rel="icon">
+    <link href="{{asset('images/LOGO.jpg')}}" rel="icon">
 
 
     <!-- Google Web Fonts -->
@@ -22,13 +22,13 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
 
     <!-- Libraries Stylesheet -->
-    <link href="{{secure_asset('lib/owlcarousel/assets/owl.carousel.min.css')}}" rel="stylesheet">
+    <link href="{{asset('lib/owlcarousel/assets/owl.carousel.min.css')}}" rel="stylesheet">
 
     <!-- Customized Bootstrap Stylesheet -->
-    <link href="{{secure_asset('css/bootstrap.min.css')}}" rel="stylesheet">
+    <link href="{{asset('css/bootstrap.min.css')}}" rel="stylesheet">
 
     <!-- Template Stylesheet -->
-    <link href="{{secure_asset('css/style.css')}}" rel="stylesheet">
+    <link href="{{asset('css/style.css')}}" rel="stylesheet">
 
 </head>
 
@@ -154,15 +154,15 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
             crossorigin="anonymous"></script>
-        <script src="{{secure_asset('lib/easing/easing.min.js')}}"></script>
-        <script src="{{secure_asset('lib/waypoints/waypoints.min.js')}}"></script>
-        <script src="{{secure_asset('lib/counterup/counterup.min.js')}}"></script>
-        <script src="{{secure_asset('lib/owlcarousel/owl.carousel.min.js')}}"></script>
+        <script src="{{asset('lib/easing/easing.min.js')}}"></script>
+        <script src="{{asset('lib/waypoints/waypoints.min.js')}}"></script>
+        <script src="{{asset('lib/counterup/counterup.min.js')}}"></script>
+        <script src="{{asset('lib/owlcarousel/owl.carousel.min.js')}}"></script>
 
         <!-- Template Javascript -->
-        <script src="{{secure_asset('js/main.js')}}"></script>
+        <script src="{{asset('js/main.js')}}"></script>
 
-        <script src="{{secure_asset('js/script.js')}}"></script>
+        <script src="{{asset('js/script.js')}}"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
             crossorigin="anonymous"></script>

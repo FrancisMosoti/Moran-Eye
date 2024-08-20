@@ -42,17 +42,17 @@ class LoginController extends Controller
 
             switch ($role) {
                 case 'farmer':
-                    return redirect()->intended('home')->with('success', 'Login successful, Farmer');
+                    return redirect()->intended('customerDashboard')->with('success', 'Login successful, Farmer');
                 case 'company_worker':
-                    return redirect()->intended('dashboard')->with('success', 'Login successful, Worker');
+                    return redirect()->intended('company-worker')->with('success', 'Login successful, Worker');
                 case 'vet':
                     return redirect()->intended('vetdashboard')->with('success', 'Login successful, Vet');
                 case 'admin':
                     return redirect()->intended('dashboard')->with('success', 'Login successful, Admin');
                 case 'user':
-                    return redirect()->intended('home')->with('success', 'Login successful, User');
+                    return redirect()->intended('/')->with('success', 'Login successful, User');
                 default:
-                    return redirect()->intended('home')->with('success', 'Login successful');
+                    return redirect()->intended('/')->with('success', 'Login successful');
             }
         }
 

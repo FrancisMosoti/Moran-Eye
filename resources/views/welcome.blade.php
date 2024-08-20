@@ -22,7 +22,7 @@
     @elseif(Auth::user()->role === 'company_worker')
         <a href="{{ route('company_worker') }}" class="btn btn-primary py-md-3 px-md-5 me-3">Company Worker Dashboard</a>
     @else
-        <a href="{{ route('userdashboard') }}" class="btn btn-primary py-md-3 px-md-5 me-3">User Dashboard</a>
+        <a href="#" class="btn btn-primary py-md-3 px-md-5 me-3">Awaiting Role allocation</a>
     @endif
     <a href="#" class="btn btn-secondary py-md-3 px-md-5">Visit Blog</a>
 @endauth
@@ -52,7 +52,7 @@
     @elseif(Auth::user()->role === 'company_worker')
         <a href="{{ route('company_worker') }}" class="btn btn-primary py-md-3 px-md-5 me-3">Company Worker Dashboard</a>
     @else
-        <a href="{{ route('userdashboard') }}" class="btn btn-primary py-md-3 px-md-5 me-3">User Dashboard</a>
+    <a href="#" class="btn btn-primary py-md-3 px-md-5 me-3">Awaiting Role allocation</a>
     @endif
     <a href="#" class="btn btn-secondary py-md-3 px-md-5">Visit Blog</a>
 @endauth
