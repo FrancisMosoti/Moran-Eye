@@ -8,7 +8,10 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+        <link rel="stylesheet" href="{{secure_asset('css/login.css')}}">
     <title>{{ config('app.name') }} - Login</title>
+
+
 </head>
 
 <body>
@@ -52,11 +55,11 @@
                                         class="btn btn-dark btn-block btn-lg gradient-custom-4 text-light">Login</button>
                                 </div>
 
-                                <p class="text-center text-muted mt-2 mb-0">Don't have an account? <a
-                                        href="{{route('register')}}" class="fw-bold text-body"><u>Click to
+                                <p class="text-center text-white mt-2 mb-0">Don't have an account? <a
+                                        href="{{route('register')}}" class="fw-bold text-body text-white"><u>Click to
                                             Register</u></a></p>
                                 <p class=" text-center mt-2"><a href=""
-                                        class="fw-bold text-body"><u>Forgot Password?</u></a>
+                                        class="fw-bold text-body text-white"><u>Forgot Password?</u></a>
                                 </p>
 
 
