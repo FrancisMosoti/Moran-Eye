@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Middleware;
 
 use Closure;
@@ -14,7 +13,7 @@ class CheckRole
      *
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
-    public function handle($request, Closure $next, $role)
+    public function handle($request, Closure $next, $roles)
     {
         if (!Auth::check()) {
             // Redirect to login if the user is not logged in
@@ -23,12 +22,17 @@ class CheckRole
 
         $user = Auth::user();
 
-        // Check if the user has the required role
-        if ($user->hasRole($role)) {
-            return $next($request);
+        // Split the roles string into an array of roles
+        $roles = explode('|', $roles);
+
+        // Check if the user has any of the required roles
+        foreach ($roles as $role) {
+            if ($user->hasRole($role)) {
+                return $next($request);
+            }
         }
 
-        // Redirect or abort if the user does not have the required role
+        // Redirect or abort if the user does not have any of the required roles
         abort(403, 'Unauthorized action.');
 
         // Alternatively, you can redirect to a custom page:

@@ -48,7 +48,7 @@
                 $dashboardRoute = route('vetdashboard');
                 break;
             case 'company_worker':
-                $dashboardRoute = route('companydashboard');
+                $dashboardRoute = route('company_worker');
                 break;
             default:
                 $dashboardRoute = route('userdashboard');
@@ -84,7 +84,7 @@
                 $dashboardRoute = route('vetdashboard');
                 break;
             case 'company_worker':
-                $dashboardRoute = route('companydashboard');
+                $dashboardRoute = route('company_worker');
                 break;
             default:
                 $dashboardRoute = route('userdashboard');
@@ -124,7 +124,17 @@
     @endif
 @endauth
                        
-                        <a class="collapse-item" href="{{route('showCows')}}">View Cows</a>
+                      
+                       <a class="collapse-item" href="{{route('showCows')}}">View Cows</a>
+                       
+                      
+                       @if (Auth::user()->role === 'company_worker')
+                          <a class="collapse-item" href="{{route('worklogs.create')}}">create worklog</a>
+                            <a class="collapse-item" href="{{route('worklogs.index')}}">view worklogs</a>
+                            <a class="collapse-item" href="{{route('companyWorker.dataEntryForm')}}">Enter Field Data</a>
+                            
+                       
+                       @endif
                     </div>
                 </div>
             </li>

@@ -6,25 +6,13 @@
         <form action="{{ route('search-cows') }}" method="GET">
             <div class="row mb-3">
                 <div class="col-md-4">
-                    <input type="text" name="search" class="form-control" placeholder="Search by serial code" aria-label="Search" value="{{ request('search') }}">
+                    <input type="text" name="search" class="form-control" placeholder="Search by serial code" aria-label="Search">
                 </div>
                 <div class="col-md-3">
-                    <select name="breed" class="form-select">
-                        <option value="">Select Breed</option>
-                        <option value="all" {{ request('breed') == 'all' ? 'selected' : '' }}>All Breeds</option>
-                        @foreach($breeds as $breed)
-                            <option value="{{ $breed }}" {{ request('breed') == $breed ? 'selected' : '' }}>{{ $breed }}</option>
-                        @endforeach
-                    </select>
+                    <!--  -->
                 </div>
                 <div class="col-md-3">
-                    <select name="purpose" class="form-select">
-                        <option value="">Select Purpose</option>
-                        <option value="all" {{ request('purpose') == 'all' ? 'selected' : '' }}>All purpose</option>
-                        @foreach($purpose as $purpose)
-                            <option value="{{ $purpose }}" {{ request('purpose') == $purpose ? 'selected' : '' }}>{{ $purpose }}</option>
-                        @endforeach
-                    </select>
+                   
                 </div>
                 <div class="col-md-2">
                     <button class="btn btn-outline-secondary w-100" type="submit">Search</button>

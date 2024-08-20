@@ -281,35 +281,34 @@ class DashboardController extends Controller
 
     //SEARCH COWS
     public function search(Request $request)
-    {
-        $search = $request->input('search');
-        $breed = $request->input('breed');
-        $purpose = $request->input('purpose');
-    
-        // Build the query
-        $query = Cow::query();
-    
-        if ($search) {
-            $query->where('serial_code', 'LIKE', "%{$search}%");
-        }
-    
-        if ($breed && $breed !== 'all') {
-            $query->where('breed', $breed);
-        }
-    
-        if ($purpose && $purpose !== 'all') {
-            $query->where('purpose', $purpose);
-        }
-    
-        // Get the filtered results
-        $cows = $query->get();
-    
-        // Fetch the lists for filters
-        $breeds = Cow::select('breed')->distinct()->get()->pluck('breed');
-        $purpose = Cow::select('purpose')->distinct()->get()->pluck('purpose');
-    
-        return view('show-cows', compact('cows', 'breeds', 'purpose'));
+{
+    $search = $request->input('search');
+    $breed = $request->input('breed');
+    $purpose = $request->input('purpose');
+
+    // Build the query
+    $query = Cow::query();
+
+    if ($search) {
+        $query->where('serial_code', 'LIKE', "%{$search}%");
     }
-    
+
+    if ($breed) {
+        $query->where('breed', $breed);
+    }
+
+    if ($purpose) {
+        $query->where('purpose', $purpose);
+    }
+
+    // Get the filtered results or all if no filters are applied
+    $cows = $query->get();
+
+    // Fetch the lists for filters
+    $breeds = Cow::select('breed')->distinct()->get()->pluck('breed');
+    $purpose = Cow::select('purpose')->distinct()->get()->pluck('purpose');
+
+    return view('show-cows', compact('cows', 'breeds', 'purpose', 'search', 'breed', 'purpose'));
+}
 
 }
