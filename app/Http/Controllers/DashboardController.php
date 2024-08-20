@@ -27,30 +27,6 @@ class DashboardController extends Controller
         return view('vetdashboard', ['cows'=>$cows]);
     }
 
-    public function addApartment(Request $request): RedirectResponse
-    {
-
-        // validation
-        $request->validate([
-            'name' => 'required|string|max:255|min:3',
-            'location' => ['required', 'string'],
-            'rooms' => ['required', 'numeric'],
-            'till' => ['required', 'numeric'],
-        ]);
-
-        Apartment::create([
-            'name' => $request->input('name'),
-            'location' => $request->input('location'),
-            'rooms' => $request->input('rooms'),
-            'Till_Number' => $request->input('till'),
-            'user_id' => $request->User()->id
-        ]);
-
-        // Notification::route('slack', config('notification.register'))->notify(new RegisterSuccess());
-
-        return redirect('/add-apartment')->with('success', 'Apartment Registered Successfully');
-
-    }
 
     //add cows
     public function viewCow()
@@ -65,7 +41,7 @@ class DashboardController extends Controller
             'breed' => 'required|string|max:255',
             'dob' => 'required|date',
             'purpose' => 'required|string|max:255',
-            'vaccination_health_records' => 'nullable|string',
+            'health_status' => 'nullable|string',
             'gender' => 'required|string|in:Male,Female',
             'cow_image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
@@ -82,7 +58,7 @@ class DashboardController extends Controller
             'breed' => $validatedData['breed'],
             'dob' => $validatedData['dob'],
             'purpose' => $validatedData['purpose'],
-            'vaccination_health_records' => $validatedData['vaccination_health_records'],
+            'vaccination_health_records' => $validatedData['health_status'],
             'gender' => $validatedData['gender'],
             'image' => $imagePath,
             'user_id' => $request->user()->id,
