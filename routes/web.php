@@ -45,6 +45,11 @@ Route::get('/logout', [LogoutController::class, 'logout']);
 
 Route::group(['middleware' => 'checkRole:admin'], function () {
 
+        // vet dashboard
+Route::get('/vetdashboard', [DashboardController::class, 'vetdashboard'])->name('vetdashboard');
+Route::get('/add-schedule', [VeterinaryController::class, 'schedules'])->name('schedules');
+Route::post('/add-schedule', [VeterinaryController::class, 'addSchedule'])->name('schedules.store');
+
 
     // Route to view the cow form
     Route::get('/add-cow', [DashboardController::class, 'viewCow'])->name('view-cow');
@@ -82,9 +87,7 @@ Route::group(['middleware' => 'checkRole:admin'], function () {
 
 
 
-// vet dashboard
-Route::get('/vetdashboard', [DashboardController::class, 'vetdashboard'])->name('vetdashboard');
-Route::get('/add-schedule', [VeterinaryController::class, 'schedules'])->name('schedules');
+
 
 
 Route::group(['middleware' => 'checkRole:farmer|admin'], function () {
@@ -94,6 +97,9 @@ Route::group(['middleware' => 'checkRole:farmer|admin'], function () {
     Route::get('/cows', [DashboardController::class, 'showCows'])->name('showCows');
 
     Route::get('/search-cows', [DashboardController::class, 'search'])->name('search-cows');
+
+
+
 
 
 });

@@ -3,6 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Http\RedirectResponse;
+
+use App\Models\Vaccine;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
+use Illuminate\Support\Facades\Storage;
 
 class VeterinaryController extends Controller
 {
@@ -16,11 +21,12 @@ class VeterinaryController extends Controller
     {
         // Validation
         $validatedData = $request->validate([
-            'disease' => 'required|string',
-            'next_vaccine' => 'required|date',
             'serial_code' => 'required|string|max:255',
-            'breed' => 'required|string|max:255',
-            'dob' => 'required|date',
+            'disease' => 'required|string',
+            'vaccine' => 'required|string',
+            'next_vaccine' => 'required|date',
+            // 'breed' => 'required|string|max:255',
+            // 'dob' => 'required|date',
             'purpose' => 'required|string|max:255',
             // 'vaccination_health_records' => 'nullable|string',
             'gender' => 'required|string|in:Male,Female',
@@ -34,15 +40,17 @@ class VeterinaryController extends Controller
         }
 
         // Create the cow record
-        $cow = Cow::create([
+        $cow = Vaccine::create([
+            'user_id' => $request->user()->id,
             'serial_code' => $validatedData['serial_code'],
-            'breed' => $validatedData['breed'],
-            'dob' => $validatedData['dob'],
+            'disease' => $validatedData['disease'],
+            'vaccine' => $validatedData['vaccine'],
+            'next_vaccine' => $validatedData['next_vaccine'],
             'purpose' => $validatedData['purpose'],
             // 'vaccination_health_records' => $validatedData['vaccination_health_records'],
             'gender' => $validatedData['gender'],
             'image' => $imagePath,
-            'user_id' => $request->user()->id,
+            
         ]);
 
         // Generate the QR code
@@ -54,7 +62,7 @@ class VeterinaryController extends Controller
         $cow->qr_code_path = $path;
         $cow->save();
 
-        return redirect('/add-cow')->with('success', 'Cow Registered Successfully');
+        return redirect()->back()->with('success', 'Vaccination Scheduled Successfully');
     }
 
     public function generateCowQRCode($cow)
@@ -64,10 +72,10 @@ class VeterinaryController extends Controller
             'next_vaccine' => $cow->next_vaccine,
             'serial_code' => $cow->serial_code,
             'breed' => $cow->breed,
-            'date_of_birth' => $cow->date_of_birth,
+            // 'date_of_birth' => $cow->date_of_birth,
             'purpose' => $cow->purpose,
-            'vaccination_records' => $cow->vaccination_records,
-            'health_records' => $cow->health_records,
+            // 'vaccination_records' => $cow->vaccination_records,
+            // 'health_records' => $cow->health_records,
             'gender' => $cow->gender,
             // 'picture_url' => $cow->picture_url,
         ];

@@ -13,12 +13,13 @@ return new class extends Migration
     {
         Schema::create('vaccines', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id');
+            $table->string('user_id');
             $table->string('serial_code')->unique();
-            $table->string('breed');
-            $table->date('dob'); // Date of birth
+            $table->string('disease');
+            $table->string('vaccine');
+            $table->date('next_vaccine'); // Date of next vaccine
             $table->string('purpose');
-            $table->text('vaccination_health_records')->nullable();
+            // $table->text('vaccination_health_records')->nullable();
             $table->enum('gender', ['Male', 'Female']);
             $table->string('image')->nullable(); // Path to the cow image
             $table->string('qr_code_path')->nullable(); // Path to the QR code image
