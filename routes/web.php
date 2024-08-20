@@ -39,15 +39,12 @@ Route::controller(LoginController::class)->group(function () {
 Route::post('/logout', [LogoutController::class, 'logout'])->name('logout');
 Route::get('/logout', [LogoutController::class, 'logout']);
 
+
+
+// // Admin-specific routes
 Route::group(['middleware' => 'checkRole:admin'], function () {
 
-        // vet dashboard
-Route::get('/vetdashboard', [DashboardController::class, 'vetDash'])->name('vetdashboard');
-Route::get('/add-schedule', [VeterinaryController::class, 'schedules'])->name('schedules');
-Route::post('/add-schedule', [VeterinaryController::class, 'addSchedule'])->name('schedules.store');
-
-
-    // Admin-specific routes
+    
     Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
 
     // Route to view the cow form
@@ -73,10 +70,6 @@ Route::post('/add-schedule', [VeterinaryController::class, 'addSchedule'])->name
     Route::put('/update-user/{id}', [DashboardController::class, 'updateUser'])->name('updateUser');
 });
 
-
-
-
-
 Route::group(['middleware' => 'checkRole:farmer|admin'], function () {
     Route::get('/cows', [DashboardController::class, 'showCows'])->name('showCows');
 
@@ -98,6 +91,16 @@ Route::group(['middleware' => 'checkRole:company_worker|admin'], function () {
     Route::post('/worklogs', [WorkLogController::class, 'store'])->name('worklogs.store');
     // routes/web.php
     Route::post('/company-worker/dataEntryForm', [CompanyWorkerController::class, 'storeDataEntry'])->name('companyWorker.dataEntryForm');
+   
+
+});
+Route::group(['middleware' => 'checkRole:veterinary'], function () {
+
+    // Routes accessible by veterinary
+            // vet dashboard
+Route::get('/vetdashboard', [DashboardController::class, 'vetDash'])->name('vetdashboard');
+Route::get('/add-schedule', [VeterinaryController::class, 'schedules'])->name('schedules');
+Route::post('/add-schedule', [VeterinaryController::class, 'addSchedule'])->name('schedules.store');
    
 
 });
