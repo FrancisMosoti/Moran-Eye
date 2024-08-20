@@ -121,7 +121,7 @@
                     @endif
                 </div>
                 <div class="card-body">
-                    <form class="user mx-3" action="{{route('add-cow')}}" method="post" enctype="multipart/form-data">
+                    <form class="user mx-3" action="{{route('schedules.store')}}" method="post" enctype="multipart/form-data">
                         @csrf
                         <div class="mb-3">
                             <label for="">Serial Code </label>
@@ -130,6 +130,14 @@
                                 class="form-control form-control-user @error('serial_code') is-invalid @enderror"
                                 id="serialCode" placeholder="Serial Code">
                             @error('serial_code')
+                            <div class="text-danger">{{ $message }}</div>@enderror
+                        </div>
+                        <div class="mb-3">
+                            <label for="">Disease Name</label>
+                            <input type="text" name="disease" value="{{ old('disease') ? old('disease') : '' }}"
+                                class="form-control form-control-user @error('disease') is-invalid @enderror" id="breed"
+                                placeholder="Disease Name">
+                            @error('disease')
                             <div class="text-danger">{{ $message }}</div>@enderror
                         </div>
                         <div class="mb-3">
@@ -145,8 +153,7 @@
                             <input type="date" name="next_vaccine" value="{{ old('next_vaccine') ? old('next_vaccine') : '' }}"
                                 class="form-control form-control-user @error('next_vaccine') is-invalid @enderror"
                                 id="dateOfBirth" placeholder="Date of Birth">
-                            @error('next_vaccine')<
-                            div class="text-danger">{{ $message }}</div>@enderror
+                            @error('next_vaccine')<div class="text-danger">{{ $message }}</div>@enderror
                         </div>
                         <div class="mb-3">
                             <label for=""> Purpose(Dairy / Beef)</label>
@@ -184,7 +191,7 @@
                             @error('cow_image')
                             <div class="text-danger">{{ $message }}</div>@enderror
                         </div>
-                        <button type="submit" class="btn btn-primary btn-user btn-block">Add Cow</button>
+                        <button type="submit" class="btn btn-primary btn-user btn-block">Add Schedule</button>
                     </form>
                 </div>
             </div>

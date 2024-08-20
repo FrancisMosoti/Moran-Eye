@@ -4,9 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
-use App\Models\Apartment;
+
 use App\Models\User;
-use App\Models\Rooms;
+use App\Models\Vaccine;
+
 use Illuminate\Support\Facades\Auth;
 use App\Models\Cow;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
@@ -20,9 +21,10 @@ class DashboardController extends Controller
         return view('show-users');
     }
 
-    public function viewApartment()
+    public function vetDash()
     {
-        return view('add-apartment');
+        $cows = Vaccine::all();
+        return view('vetdashboard', ['cows'=>$cows]);
     }
 
     public function addApartment(Request $request): RedirectResponse
