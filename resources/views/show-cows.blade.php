@@ -3,13 +3,20 @@
 @section('content')
     <!-- Search and Filter Form -->
     <div class="container mt-4">
-        <form action="{{ route('search-cows') }}" method="GET">
+        <form action="" method="POST">
             <div class="row mb-3">
                 <div class="col-md-4">
                     <input type="text" name="search" class="form-control" placeholder="Search by serial code" aria-label="Search">
                 </div>
                 <div class="col-md-3">
                     <!--  -->
+                    <select name="breed" class="form-select">
+                        <option value="">Select Breed</option>
+                        <option value="all" {{ request('breed') == 'all' ? 'selected' : '' }}>All Breeds</option>
+                        @foreach($cows as $breed)
+                            <option value="{{ $breed }}" {{ request('breed') == $breed ? 'selected' : '' }}>{{ $breed }}</option>
+                        @endforeach
+                    </select>
                 </div>
                 <div class="col-md-3">
                    

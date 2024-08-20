@@ -17,7 +17,7 @@ class DashboardController extends Controller
     //
     public function dashboard()
     {
-        return view('dashboard', ['apartments' => Apartment::where('user_id', Auth::User()->id)->get()]);
+        return view('show-users');
     }
 
     public function viewApartment()

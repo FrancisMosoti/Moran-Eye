@@ -40,6 +40,8 @@ Route::post('/logout', [LogoutController::class, 'logout'])->name('logout');
 Route::get('/logout', [LogoutController::class, 'logout']);
 
 Route::group(['middleware' => 'checkRole:admin'], function () {
+
+
     // Admin-specific routes
     Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
 
@@ -48,6 +50,7 @@ Route::group(['middleware' => 'checkRole:admin'], function () {
 
     // Route to handle cow data submission
     Route::post('/add-cow', [DashboardController::class, 'addCow'])->name('add-cow');
+    
 
     // Route to edit cow details
     Route::get('/cows/edit/{id}', [DashboardController::class, 'edit'])->name('edit-cow');
@@ -58,6 +61,7 @@ Route::group(['middleware' => 'checkRole:admin'], function () {
 
     // Route to show users
     Route::get('/show-users', [DashboardController::class, 'showUsers'])->name('showUsers');
+    Route::get('/dashboard', [DashboardController::class, 'showUsers'])->name('dashboard');
 
     // Route to edit users
     Route::get('/edit-user/{id}', [DashboardController::class, 'editUser'])->name('editUser');
@@ -68,7 +72,8 @@ Route::get('/vetdashboard', [DashboardController::class, 'vetdashboard'])->name(
 Route::get('/add-schedule', [VeterinaryController::class, 'schedules'])->name('schedules');
 
 Route::group(['middleware' => 'checkRole:farmer|admin'], function () {
-    // Routes accessible by both farmers and admins
+    Route::get('/cows', [DashboardController::class, 'showCows'])->name('showCows');
+
     Route::get('/customerDashboard', [DashboardController::class, 'customerDashboard'])->name('customerdashboard');
 
     // Routes to view and search cows

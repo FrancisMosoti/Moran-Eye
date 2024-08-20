@@ -133,19 +133,19 @@
                             <div class="text-danger">{{ $message }}</div>@enderror
                         </div>
                         <div class="mb-3">
-                            <label for="">Enter Cow Breed</label>
-                            <input type="text" name="breed" value="{{ old('breed') ? old('breed') : '' }}"
-                                class="form-control form-control-user @error('breed') is-invalid @enderror" id="breed"
-                                placeholder="Breed">
-                            @error('breed')
+                            <label for="">Vaccine Name</label>
+                            <input type="text" name="vaccine" value="{{ old('vaccine') ? old('vaccine') : '' }}"
+                                class="form-control form-control-user @error('vaccine') is-invalid @enderror" id="breed"
+                                placeholder="Vaccine Name">
+                            @error('vaccine')
                             <div class="text-danger">{{ $message }}</div>@enderror
                         </div>
                         <div class="mb-3">
-                            <label for=""> Date of Birth</label>
-                            <input type="date" name="dob" value="{{ old('dob') ? old('dob') : '' }}"
-                                class="form-control form-control-user @error('dob') is-invalid @enderror"
+                            <label for=""> Date For Next Vaccine</label>
+                            <input type="date" name="next_vaccine" value="{{ old('next_vaccine') ? old('next_vaccine') : '' }}"
+                                class="form-control form-control-user @error('next_vaccine') is-invalid @enderror"
                                 id="dateOfBirth" placeholder="Date of Birth">
-                            @error('dob')<
+                            @error('next_vaccine')<
                             div class="text-danger">{{ $message }}</div>@enderror
                         </div>
                         <div class="mb-3">
