@@ -20,7 +20,7 @@
     @elseif(Auth::user()->role === 'veterinary')
         <a href="{{ route('vetdashboard') }}" class="btn btn-primary py-md-3 px-md-5 me-3">Veterinary Dashboard</a>
     @elseif(Auth::user()->role === 'company_worker')
-        <a href="{{ route('companydashboard') }}" class="btn btn-primary py-md-3 px-md-5 me-3">Company Worker Dashboard</a>
+        <a href="{{ route('company_worker') }}" class="btn btn-primary py-md-3 px-md-5 me-3">Company Worker Dashboard</a>
     @else
         <a href="{{ route('userdashboard') }}" class="btn btn-primary py-md-3 px-md-5 me-3">User Dashboard</a>
     @endif
@@ -50,7 +50,7 @@
     @elseif(Auth::user()->role === 'veterinary')
         <a href="{{ route('vetdashboard') }}" class="btn btn-primary py-md-3 px-md-5 me-3">Veterinary Dashboard</a>
     @elseif(Auth::user()->role === 'company_worker')
-        <a href="{{ route('companydashboard') }}" class="btn btn-primary py-md-3 px-md-5 me-3">Company Worker Dashboard</a>
+        <a href="{{ route('company_worker') }}" class="btn btn-primary py-md-3 px-md-5 me-3">Company Worker Dashboard</a>
     @else
         <a href="{{ route('userdashboard') }}" class="btn btn-primary py-md-3 px-md-5 me-3">User Dashboard</a>
     @endif
