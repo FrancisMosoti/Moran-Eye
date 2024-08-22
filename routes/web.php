@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CompanyWorkerController;
+use App\Http\Controllers\DiseasesController;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\RegisterController;
@@ -77,7 +78,7 @@ Route::post('/add-schedule', [VeterinaryController::class, 'addSchedule'])->name
 
 
 
-Route::group(['middleware' => 'checkRole:farmer|admin'], function () {
+Route::group(['middleware' => 'checkRole:farmer|admin|company_worker|vetinary'], function () {
     Route::get('/cows', [DashboardController::class, 'showCows'])->name('showCows');
 
     Route::get('/customerDashboard', [DashboardController::class, 'customerDashboard'])->name('customerdashboard');
@@ -101,3 +102,9 @@ Route::group(['middleware' => 'checkRole:company_worker|admin'], function () {
    
 
 });
+Route::match(['get', 'post'], '/add-disease', [DiseasesController::class, 'addDisease'])->name('add-disease');
+Route::get('/add-disease', [DiseasesController::class, 'showForm']);
+Route::post('/add-disease', [DiseasesController::class, 'submitForm']);
+
+Route::get('/cow/{serial_code}/diagnosis', [DiseasesController::class, 'viewSymptoms'])->name('cow.diagnosis');
+Route::post('/cow/{serial_code}/diagnosis', [DiseasesController::class, 'submitDiagnosis']);
