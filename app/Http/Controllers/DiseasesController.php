@@ -49,16 +49,15 @@ class DiseasesController extends Controller
         // Return the view with cow and symptoms
         return view('diagnosis', ['cow' => $cow, 'symptoms' => $symptoms]);
     }
-    public function showSymptoms($serial_code) {
-        // Get the cow based on the serial code
-        $cow = Cow::where('serial_code', $serial_code)->firstOrFail();
+    public function showSymptoms() {
+        // Get all cows that have recorded symptoms
+        $symptoms = symptom::all();
     
-        // Get the symptoms associated with this cow
-        $symptoms = Symptom::where('cow_serial_code', $serial_code)->get();
-    
-        // Return the view with cow and symptoms
-        return view('show-symptoms', ['cow' => $cow, 'symptoms' => $symptoms]);
+        // Return the view with cows
+        return view('show-symptoms', ['symptoms' => $symptoms]);
     }
+    
+    
     
     
     

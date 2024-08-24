@@ -127,7 +127,7 @@
                       
                        <a class="collapse-item" href="{{route('showCows')}}">View Cows</a>
                        <a class="collapse-item" href="{{route('add-disease')}} ">Record Symptoms</a>
-                       <a class="collapse-item"  href="{{ route('show-symptoms', ['serial_code' => $cow->serial_code]) }}">View Symptoms</a>
+                       <a class="collapse-item"  href="{{ route('show-symptoms') }}">View Symptoms</a>
 
                       
                       

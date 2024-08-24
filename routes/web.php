@@ -109,7 +109,7 @@ Route::get('/add-disease', [DiseasesController::class, 'showForm']);
 Route::post('/add-disease', [DiseasesController::class, 'submitForm']);
 Route::get('/add-disease', [DiseasesController::class, 'showForm'])->name('add-disease');
 
-route::get('/show-symptoms/{serial_code}', [DiseasesController::class, 'showSymptoms'])->name('show-symptoms');
+route::get('/show-symptoms', [DiseasesController::class, 'showSymptoms'])->name('show-symptoms');;
 
 
 
