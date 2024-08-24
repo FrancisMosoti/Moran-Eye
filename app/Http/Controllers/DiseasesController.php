@@ -9,10 +9,7 @@ use App\Models\Diagnosis; // Correct way to use the Diagnosis model
 
 class DiseasesController extends Controller
 {
-    public function addDisease()
-    {
-        return view('add-disease');
-    }
+    
 
     public function showForm()
     {
@@ -30,25 +27,43 @@ class DiseasesController extends Controller
             'serial_code' => 'required|exists:cows,serial_code',
             'symptoms' => 'required|string',
         ]);
-
-        // Here you would save the disease and symptoms to the database
-
-        return redirect()->back()->with('success', 'Disease added successfully!');
+    
+        // Save the disease and symptoms to the database
+        $symptom = new Symptom();
+        $symptom->cow_serial_code = $validatedData['serial_code'];
+        $symptom->symptoms = $validatedData['symptoms'];
+        $symptom->save();
+    
+        return redirect()->back()->with('success', 'Symptoms recorded successfully awaiting veterinary diagnosis!');
     }
-
-    public function viewSymptoms($serial_code)
+    
+   
+    public function diagnosis($cow_serial_code)
     {
         // Get the cow based on the serial code
-        $cow = Cow::where('serial_code', $serial_code)->firstOrFail();
+        $cow = Cow::where('cow_serial_code', $cow_serial_code)->firstOrFail();
 
         // Get the symptoms associated with this cow
-        $symptoms = Symptom::where('serial_code', $serial_code)->get();
+        $symptoms = Symptom::where('cow_serial_code', $cow_serial_code)->get();
 
         // Return the view with cow and symptoms
         return view('diagnosis', ['cow' => $cow, 'symptoms' => $symptoms]);
     }
+    public function showSymptoms($serial_code) {
+        // Get the cow based on the serial code
+        $cow = Cow::where('serial_code', $serial_code)->firstOrFail();
+    
+        // Get the symptoms associated with this cow
+        $symptoms = Symptom::where('cow_serial_code', $serial_code)->get();
+    
+        // Return the view with cow and symptoms
+        return view('show-symptoms', ['cow' => $cow, 'symptoms' => $symptoms]);
+    }
+    
+    
+    
 
-    public function submitDiagnosis(Request $request, $serial_code)
+    public function submitDiagnosis(Request $request, $cow_serial_code)
     {
         // Validate the input
         $validatedData = $request->validate([
@@ -58,7 +73,7 @@ class DiseasesController extends Controller
 
         // Store the diagnosis and medication
         $diagnosis = new Diagnosis();
-        $diagnosis->serial_code = $serial_code;
+        $diagnosis->cow_serial_code = $cow_serial_code;
         $diagnosis->diagnosis = $validatedData['diagnosis'];
         $diagnosis->medication = $validatedData['medication'];
         $diagnosis->save();

@@ -102,9 +102,14 @@ Route::group(['middleware' => 'checkRole:company_worker|admin'], function () {
    
 
 });
-Route::match(['get', 'post'], '/add-disease', [DiseasesController::class, 'addDisease'])->name('add-disease');
+
+
+
 Route::get('/add-disease', [DiseasesController::class, 'showForm']);
 Route::post('/add-disease', [DiseasesController::class, 'submitForm']);
+Route::get('/add-disease', [DiseasesController::class, 'showForm'])->name('add-disease');
 
-Route::get('/cow/{serial_code}/diagnosis', [DiseasesController::class, 'viewSymptoms'])->name('cow.diagnosis');
-Route::post('/cow/{serial_code}/diagnosis', [DiseasesController::class, 'submitDiagnosis']);
+route::get('/show-symptoms/{serial_code}', [DiseasesController::class, 'showSymptoms'])->name('show-symptoms');
+
+
+
