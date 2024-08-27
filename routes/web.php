@@ -42,10 +42,10 @@ Route::get('/logout', [LogoutController::class, 'logout']);
 
 Route::group(['middleware' => 'checkRole:admin'], function () {
 
-        // vet dashboard
-Route::get('/vetdashboard', [DashboardController::class, 'vetDash'])->name('vetdashboard');
-Route::get('/add-schedule', [VeterinaryController::class, 'schedules'])->name('schedules');
-Route::post('/add-schedule', [VeterinaryController::class, 'addSchedule'])->name('schedules.store');
+    // vet dashboard
+    Route::get('/vetdashboard', [DashboardController::class, 'vetDash'])->name('vetdashboard');
+    Route::get('/add-schedule', [VeterinaryController::class, 'schedules'])->name('schedules');
+    Route::post('/add-schedule', [VeterinaryController::class, 'addSchedule'])->name('schedules.store');
 
 
     // Admin-specific routes
@@ -56,7 +56,7 @@ Route::post('/add-schedule', [VeterinaryController::class, 'addSchedule'])->name
 
     // Route to handle cow data submission
     Route::post('/add-cow', [DashboardController::class, 'addCow'])->name('add-cow');
-    
+
 
     // Route to edit cow details
     Route::get('/cows/edit/{id}', [DashboardController::class, 'edit'])->name('edit-cow');
@@ -99,7 +99,7 @@ Route::group(['middleware' => 'checkRole:company_worker|admin'], function () {
     Route::post('/worklogs', [WorkLogController::class, 'store'])->name('worklogs.store');
     // routes/web.php
     Route::post('/company-worker/dataEntryForm', [CompanyWorkerController::class, 'storeDataEntry'])->name('companyWorker.dataEntryForm');
-   
+
 
 });
 
@@ -109,7 +109,15 @@ Route::get('/add-disease', [DiseasesController::class, 'showForm']);
 Route::post('/add-disease', [DiseasesController::class, 'submitForm']);
 Route::get('/add-disease', [DiseasesController::class, 'showForm'])->name('add-disease');
 
-route::get('/show-symptoms', [DiseasesController::class, 'showSymptoms'])->name('show-symptoms');;
+route::get('/show-symptoms', [DiseasesController::class, 'showSymptoms'])->name('show-symptoms');
+;
+
+route::get('/diagnosis/create/{id}', [DiseasesController::class, 'create'])->name('diagnosis.create');
+Route::post('/diagnosis/store', [DiseasesController::class, 'store'])->name('diagnosis.store');
+
+
+
+route::get('/diagnosis/{id}', [DiseasesController::class, 'show'])->name('diagnosis.show');Route::get('/diagnosis/{id}/edit', [DiseasesController::class, 'edit'])->name('diagnosis.edit');Route::post('/diagnosis/{id}/update', [DiseasesController::class, 'update'])->name('diagnosis.update');
 
 
 

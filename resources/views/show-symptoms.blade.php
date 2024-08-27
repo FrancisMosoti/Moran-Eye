@@ -13,9 +13,15 @@
         <tbody>
             @foreach($symptoms as $symptom)
                 <tr>
-                    <td>{{ $symptom->cow_serial_code }}</td> <!-- Corrected to use $symptom -->
+                    <td>{{ $symptom->cow_serial_code }}</td>
                     <td>{{ $symptom->symptoms }}</td>
-                    <td><a href="#" class="btn btn-primary">Make Diagnosis</a></td>
+                    <td>
+                        @if($symptom->diagnosis)
+                            <button class="btn btn-secondary" disabled>Diagnosis Made</button>
+                        @else
+                            <a href="{{ route('diagnosis.create', ['id' => $symptom->id]) }}" class="btn btn-primary">Make Diagnosis</a>
+                        @endif
+                    </td>
                 </tr>
             @endforeach
         </tbody>

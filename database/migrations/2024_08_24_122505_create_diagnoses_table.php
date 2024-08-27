@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('diagnoses', function (Blueprint $table) {
             $table->id();
-            $table->string('serial_code');
+            $table->string('cow_serial_code');
             $table->text('diagnosis');
             $table->text('medication');
             $table->timestamps();

@@ -20,6 +20,7 @@ class DiseasesController extends Controller
         return view('add-disease', ['cows' => $cows]);
     }
 
+
     public function submitForm(Request $request)
     {
         // Validate the form input
@@ -62,22 +63,68 @@ class DiseasesController extends Controller
     
     
 
-    public function submitDiagnosis(Request $request, $cow_serial_code)
+       public function create($id)
     {
-        // Validate the input
-        $validatedData = $request->validate([
+        // Retrieve the symptom and cow details using the ID
+        $symptoms = Symptom::findOrFail($id);
+        return view('diagnosis.create', compact('symptoms'));
+    }
+
+    public function store(Request $request)
+    {
+        // Validate the incoming request data
+        $request->validate([
+            'cow_serial_code' => 'required|string',
             'diagnosis' => 'required|string',
             'medication' => 'required|string',
         ]);
 
-        // Store the diagnosis and medication
-        $diagnosis = new Diagnosis();
-        $diagnosis->cow_serial_code = $cow_serial_code;
-        $diagnosis->diagnosis = $validatedData['diagnosis'];
-        $diagnosis->medication = $validatedData['medication'];
-        $diagnosis->save();
+        // Store the diagnosis in the database
+        Diagnosis::create([
+            'cow_serial_code' => $request->input('cow_serial_code'),
+            'diagnosis' => $request->input('diagnosis'),
+            'medication' => $request->input('medication'),
+        ]);
 
-        // Redirect back with success message
-        return redirect()->back()->with('success', 'Diagnosis and medication added successfully!');
+        // Redirect back with a success message
+        return redirect()->route('show-symptoms')->with('success', 'Diagnosis recorded successfully.');
+    }
+
+    public function view(){
+        $diagnoses = Diagnosis::all();
+        return view('diagnosis.view', compact('diagnoses'));
+    }
+
+    public function show($id)
+    {
+        // Retrieve the diagnosis by ID
+        $diagnosis = Diagnosis::findOrFail($id);
+        return view('diagnosis.show', compact('diagnosis'));
+    }
+
+    public function edit($id)
+    {
+        // Retrieve the diagnosis by ID for editing
+        $diagnosis = Diagnosis::findOrFail($id);
+        return view('diagnosis.edit', compact('diagnosis'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        // Validate the incoming request data
+        $request->validate([
+            'diagnosis' => 'required|string',
+            'medication' => 'required|string',
+        ]);
+
+        // Find the diagnosis and update it
+        $diagnosis = Diagnosis::findOrFail($id);
+        $diagnosis->update([
+            'diagnosis' => $request->input('diagnosis'),
+            'medication' => $request->input('medication'),
+        ]);
+
+        // Redirect to the diagnosis view page with a success message
+        return redirect()->route('diagnosis.show', $id)->with('success', 'Diagnosis updated successfully.');
     }
 }
