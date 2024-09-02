@@ -10,13 +10,13 @@
                 </div>
                 <div class="col-md-3">
                     <!--  -->
-                    <select name="breed" class="form-select">
+                    <!-- <select name="breed" class="form-select">
                         <option value="">Select Breed</option>
                         <option value="all" {{ request('breed') == 'all' ? 'selected' : '' }}>All Breeds</option>
                         @foreach($cows as $breed)
                             <option value="{{ $breed }}" {{ request('breed') == $breed ? 'selected' : '' }}>{{ $breed }}</option>
                         @endforeach
-                    </select>
+                    </select> -->
                 </div>
                 <div class="col-md-3">
                    

@@ -126,6 +126,13 @@
                        
                       
                        <a class="collapse-item" href="{{route('showCows')}}">View Cows</a>
+                       <a class="collapse-item" href="{{route('add-disease')}} ">Record Symptoms</a>
+                       <a class="collapse-item"  href="{{ route('show-symptoms') }}">View Symptoms</a>
+                       
+
+                      
+                      
+
                        
                       
                        @if (Auth::user()->role === 'company_worker')
