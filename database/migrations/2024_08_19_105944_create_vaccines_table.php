@@ -14,7 +14,9 @@ return new class extends Migration
         Schema::create('vaccines', function (Blueprint $table) {
             $table->id();
             $table->string('user_id');
-            $table->string('serial_code')->unique();
+            
+            $table->string('serial_code');
+            $table->foreign('serial_code')->references('serial_code')->on('cows')->onDelete('cascade');
             $table->string('disease');
             $table->string('vaccine');
             $table->date('next_vaccine'); // Date of next vaccine

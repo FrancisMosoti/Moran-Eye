@@ -13,12 +13,16 @@ return new class extends Migration
     {
         Schema::create('data_entries', function (Blueprint $table) {
             $table->id();
-            $table->timestamp('date_time');
+            
+            $table->string('user_id');
+            $table->string('serial_code');
             $table->string('task_description');
-            $table->foreignId('animal_id')->constrained();
+            $table->foreign('serial_code')->references('serial_code')->on('cows')->onDelete('cascade');
+            
             $table->string('quantity');
             $table->text('worker_notes')->nullable();
-            $table->foreignId('worker_id')->constrained('users');
+            $table->timestamp('date_time');
+            
             $table->timestamps();
         });
     }

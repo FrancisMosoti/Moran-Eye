@@ -13,11 +13,11 @@ return new class extends Migration
     {
         Schema::create('symptoms', function (Blueprint $table) {
             $table->id();
+            $table->string('user_id');
             $table->string('cow_serial_code');
             $table->text('symptoms');
-            $table->timestamps();
-        
             $table->foreign('cow_serial_code')->references('serial_code')->on('cows')->onDelete('cascade');
+            $table->timestamps();
         });
         
     }
