@@ -31,6 +31,7 @@ class DiseasesController extends Controller
     
         // Save the disease and symptoms to the database
         $symptom = new Symptom();
+        $symptom->user_id = $request->user->id;
         $symptom->cow_serial_code = $validatedData['serial_code'];
         $symptom->symptoms = $validatedData['symptoms'];
         $symptom->save();
